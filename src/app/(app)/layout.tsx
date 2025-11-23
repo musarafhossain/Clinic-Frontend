@@ -1,10 +1,9 @@
-'use client';
-import ProtectedRoute from "@/components/ProtectedRoute";
+import AuthGuard from "@/components/AuthGuard";
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
     return (
-        <ProtectedRoute>
+        <AuthGuard>
             {children}
-        </ProtectedRoute>
+        </AuthGuard>
     );
 }
