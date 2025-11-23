@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -6,19 +6,21 @@ import { useAuth } from "@/hooks/useAuth";
 import { paths } from "@/routes/paths";
 
 export default function AuthGuard({ children }: { children: ReactNode }) {
-  const { token } = useAuth();
+  const { token, loading } = useAuth();
   const router = useRouter();
 
-  const isAuthenticated = !!token; 
-
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !token) {
       router.replace(paths.auth.signIn);
     }
-  }, [isAuthenticated, router]);
+  }, [loading, token, router]);
 
-  if (!isAuthenticated) {
+  if (loading) {
     return <>Loading...</>;
+  }
+
+  if (!token) {
+    return null;
   }
 
   return <>{children}</>;

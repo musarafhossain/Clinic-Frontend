@@ -20,7 +20,7 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   token: null,
-  loading: false,
+  loading: true,
   error: null,
   hydrated: false,
 };
@@ -29,16 +29,25 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    hydrateAuth(state, action: PayloadAction<{ user: User | null; token: string | null }>) {
+    hydrateAuth(
+      state,
+      action: PayloadAction<{ user: User | null; token: string | null }>
+    ) {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.hydrated = true;
+      state.loading = false;
     },
+
     loginStart(state) {
       state.loading = true;
       state.error = null;
     },
-    loginSuccess(state, action: PayloadAction<{ user: User; token: string }>) {
+
+    loginSuccess(
+      state,
+      action: PayloadAction<{ user: User; token: string }>
+    ) {
       state.loading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
@@ -48,10 +57,12 @@ const authSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(action.payload.user));
       }
     },
+
     loginFailure(state, action: PayloadAction<string>) {
       state.loading = false;
       state.error = action.payload;
     },
+
     logout(state) {
       state.user = null;
       state.token = null;

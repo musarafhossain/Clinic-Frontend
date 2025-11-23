@@ -16,7 +16,6 @@ const HomeView = () => {
         gap: 2,
       }}
     >
-      <Typography variant="h4">Welcome, {user?.email || 'User'}</Typography>
       <Button variant="contained" color="error" onClick={logout}>
         Logout
       </Button>

@@ -21,9 +21,6 @@ import { useAuth } from "@/hooks/useAuth";
 import toast from "react-hot-toast";
 import { paths } from "@/routes/paths";
 
-// -------------------------
-// Zod schema
-// -------------------------
 const schema = z.object({
     email: z.email("Invalid email"),
     password: z.string().min(1, "Password is required"),
@@ -37,7 +34,7 @@ interface LoginParams {
 export default function SignInView() {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
-    const { loginSuccess, user } = useAuth();
+    const { loginSuccess, user, token } = useAuth();
 
     useEffect(() => {
         if (user) router.push(paths.root);
