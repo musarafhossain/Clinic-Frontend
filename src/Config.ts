@@ -12,6 +12,6 @@ export const Config: ConfigValue = {
     NAME: 'Physiotherapy',
   },
   API: {
-    URL: process.env.NEXT_PUBLIC_API_URL ?? 'https://backend.musaraf.org.in/api',
+    URL: /* process.env.NEXT_PUBLIC_API_URL ?? */ 'https://backend.musaraf.org.in/api',
   },
 };
