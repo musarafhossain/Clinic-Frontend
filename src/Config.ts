@@ -9,9 +9,9 @@ export type ConfigValue = {
 
 export const Config: ConfigValue = {
   APP: {
-    NAME: 'Phisiotherapy',
+    NAME: 'Physiotherapy',
   },
   API: {
-    URL: 'https://backend.musaraf.org.in/api'
-  }
+    URL: process.env.NEXT_PUBLIC_API_URL ?? 'https://backend.musaraf.org.in/api',
+  },
 };
