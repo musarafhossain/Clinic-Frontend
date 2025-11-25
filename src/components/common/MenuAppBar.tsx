@@ -1,5 +1,6 @@
 'use client';
-import * as React from 'react';
+import { useState } from 'react';
+import { useColorScheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,10 +12,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useColorScheme } from '@mui/material/styles';
+import AppBarDrawer from './AppBarDrawer';
 
 export default function MenuAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openDarawer, setOpenDrawer] = useState(false);
   const { mode, setMode } = useColorScheme();
   const darkMode = mode === 'dark';
 
@@ -30,7 +32,14 @@ export default function MenuAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+          <IconButton
+            onClick={() => setOpenDrawer(!openDarawer)}
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -68,6 +77,7 @@ export default function MenuAppBar() {
           </Menu>
         </Toolbar>
       </AppBar>
+      <AppBarDrawer open={openDarawer} setOpen={setOpenDrawer} />
     </Box>
   );
 }

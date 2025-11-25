@@ -1,24 +1,17 @@
 'use client';
-
-import * as React from 'react';
+import { useState } from 'react';
+import { useColorScheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PersonIcon from '@mui/icons-material/Person';
 
-import { useColorScheme } from '@mui/material/styles';
-
 export default function AppBottomNavigation() {
-  const [value, setValue] = React.useState(0);
-
-  // ⭐ Get MUI color mode
+  const [value, setValue] = useState(0);
   const { mode } = useColorScheme();
-
-  // auto bg based on system + user toggle
   const bgColor = mode === "dark" ? '#1e1e1e' : '#ffffff';
   const textColor = mode === "dark" ? '#bbb' : '#000';
 

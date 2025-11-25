@@ -3,8 +3,12 @@ export const paths = {
   user: {
     root: `/users`,
     new: `/users/new`,
-    list: `/users/list`,
     edit: (id: string) => `/users/${id}/edit`,
+  },
+  disease: {
+    root: `/diseases`,
+    new: `/diseases/new`,
+    edit: (id: string) => `/diseases/${id}/edit`,
   },
   comingSoon: '/coming-soon',
   maintenance: '/maintenance',
