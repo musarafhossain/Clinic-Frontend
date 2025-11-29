@@ -31,6 +31,7 @@ export default function AppBarDrawer({ open, setOpen }: Props) {
     };
 
     const goTo = (path: string) => {
+        setOpen(false); 
         router.push(path);
     };
 

@@ -1,9 +1,9 @@
 export abstract class BaseModel {
-  public uuid?: string;
-  public createdAt?: number;
-  public updatedAt?: number;
-  public createdBy?: string;
-  public updatedBy?: string;
+  public id!: string;
+  public created_at?: number;
+  public updated_at?: number;
+  public created_by?: string;
+  public updated_by?: string;
 }
 
 export class States {

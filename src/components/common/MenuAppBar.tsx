@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { useColorScheme } from '@mui/material/styles';
+import { useAuth } from '@/hooks/useAuth';
+import { useAppBarTitle } from '@/context/AppBarTitleContext';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,17 +10,21 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AppBarDrawer from './AppBarDrawer';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function MenuAppBar() {
+  const { title } = useAppBarTitle();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [openDarawer, setOpenDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const { mode, setMode } = useColorScheme();
   const darkMode = mode === 'dark';
+  const { logout } = useAuth()
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,21 +36,28 @@ export default function MenuAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="static">
         <Toolbar>
           <IconButton
-            onClick={() => setOpenDrawer(!openDarawer)}
+            onClick={() => setOpenDrawer(!openDrawer)}
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Home
-          </Typography>
+
+          {title ?
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+              {title}
+            </Typography>
+            :
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+              Phyzo
+            </Typography>
+          }
+
           <IconButton
             size="large"
             color="inherit"
@@ -53,31 +66,45 @@ export default function MenuAppBar() {
           >
             {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
           </IconButton>
+
           <IconButton
             size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleMenu}
             color="inherit"
           >
             <AccountCircle />
           </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+
+          <Popover
             open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
             onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-          </Menu>
+            <MenuItem onClick={handleClose}>
+              <PersonIcon fontSize="small" sx={{ mr: 2 }} />
+              Profile
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                logout();
+              }}
+              sx={{ color: 'error.main' }}
+            >
+              <LogoutIcon fontSize="small" sx={{ mr: 2, color: 'error.main' }} />
+              Logout
+            </MenuItem>
+          </Popover>
         </Toolbar>
       </AppBar>
-      <AppBarDrawer open={openDarawer} setOpen={setOpenDrawer} />
+
+      <AppBarDrawer open={openDrawer} setOpen={setOpenDrawer} />
     </Box>
   );
 }

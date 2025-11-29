@@ -16,7 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { AuthService } from "@/services/AuthService";
+import { AuthService } from "@/services";
 import { useAuth } from "@/hooks/useAuth";
 import toast from "react-hot-toast";
 import { paths } from "@/routes/paths";

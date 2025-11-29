@@ -1,3 +1,5 @@
+import { UserModel } from "./User.Models"
+
 export class ResponseModel<T> {
   data!: T
   status!: number
@@ -25,7 +27,6 @@ export class DataList<T extends {}> {
   public hasItem?: boolean;
 }
 
-export type FileOptionsType = {
-  LABEL: string;
-  VALUE: string;
-};
+export {
+  UserModel,
+}
