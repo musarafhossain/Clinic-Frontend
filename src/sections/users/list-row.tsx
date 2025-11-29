@@ -36,7 +36,7 @@ const ListRow = ({ row }: Props) => {
     const router = useRouter();
 
     const deleteMutation = useMutation({
-        mutationFn: () => UserService.delete(row.id),
+        mutationFn: () => UserService.delete(row.id || ''),
         onSuccess: (resp) => {
             if (resp.success) {
                 queryClient.invalidateQueries({ queryKey: ['users'] });
@@ -63,11 +63,11 @@ const ListRow = ({ row }: Props) => {
 
     const handleView = () => {
         closeMenu();
-        router.push(paths.user.view(row.id));
+        router.push(paths.user.view(row.id || ''));
     };
     const handleEdit = () => {
         closeMenu();
-        router.push(paths.user.edit(row.id));
+        router.push(paths.user.edit(row.id || ''));
     };
 
     return (
