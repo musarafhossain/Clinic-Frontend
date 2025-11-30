@@ -45,14 +45,33 @@ export const useAuth = () => {
                         token,
                     })
                 );
-            } catch (err) {
-                console.error("Auth validation failed:", err);
-                logout();
+            } catch (err: any) {
+                const status = err?.response?.status;
+
+                // If server error → do NOT logout
+                if (status >= 500) {
+                    console.error("Server error during auth validation:", err);
+                    return;
+                }
+
+                // If no response (network issue) → do NOT logout
+                if (!status) {
+                    console.error("Network/unknown error during auth validation:", err);
+                    return;
+                }
+
+                // If authentication error (401/403) → logout
+                if (status === 401 || status === 403) {
+                    console.warn("Token invalid, logging out...");
+                    logout();
+                    return;
+                }
+                console.error("Unexpected error during auth validation:", err);
             }
         };
 
         validateUser();
-    }, [token, dispatch]);
+    }, []);
 
     const loginSuccess = (payload: { user: any; token: string }) => {
         if (typeof window !== "undefined") {

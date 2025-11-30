@@ -9,12 +9,14 @@ export const paths = {
   disease: {
     root: `/diseases`,
     new: `/diseases/new`,
-    edit: (id: string) => `/diseases/${id}/edit`,
+    edit: (id: string) => `/diseases/edit?id=${id}`,
+    view: (id: string) => `/diseases/view?id=${id}`,
   },
   patient: {
     root: `/patients`,
     new: `/patients/new`,
-    edit: (id: string) => `/patients/${id}/edit`,
+    edit: (id: string) => `/patients/edit?id=${id}`,
+    view: (id: string) => `/patients/view?id=${id}`,
   },
   attendance: '/attendance',
   profile: '/profile',

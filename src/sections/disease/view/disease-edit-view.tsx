@@ -1,66 +1,61 @@
 'use client';
-
 import { Box } from '@mui/material';
-import UserForm from '../user-from';
+import DiseaseForm from '../disease-from';
 import { useQuery } from '@tanstack/react-query';
-import { UserService } from '@/services';
+import { DiseaseService } from '@/services';
 import { useRouter } from 'next/navigation';
 import { paths } from '@/routes/paths';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import UserFormSkeleton from '../user-form-skeleton';
+import DiseaseFormSkeleton from '../disease-form-skeleton';
 import Retry from '@/sections/common/Retry';
 
 interface Props {
     id: string;
 }
 
-const UserEditView = ({ id }: Props) => {
+const DiseaseEditView = ({ id }: Props) => {
     const router = useRouter();
 
-    const {
-        data,
-        isLoading,
-        isFetched,
-        isError,
-        error,
-        refetch,
-    } = useQuery({
+    const diseaseQuery = useQuery({
         enabled: !!id,
-        queryKey: ['users', id],
-        queryFn: () => UserService.getById(id),
+        queryKey: ['diseases', id],
+        queryFn: () => DiseaseService.getById(id),
         select: (response) => response?.data,
         retry: false,
     });
 
+    const { data, isLoading, isError, error, refetch } = diseaseQuery;
+
+    // Toast on error
     useEffect(() => {
         if (isError) {
             const msg =
                 //@ts-ignore
-                error?.response?.data?.message || 'Failed to fetch user';
+                error?.response?.data?.message || 'Failed to fetch disease';
             toast.error(msg);
         }
     }, [isError, error]);
 
-    if (isLoading) return <UserFormSkeleton />;
+    if (isLoading) return <DiseaseFormSkeleton />;
 
     if (isError) {
         return (
             <Retry
-                message="Failed to load user"
                 onRetry={refetch}
-                onBack={() => router.push(paths.user.root)}
+                onBack={() => router.push(paths.disease.root)}
+                message="Failed to load disease"
             />
         );
     }
 
-    if (isFetched && !data) return null;
+    if (!data) return null;
 
     return (
         <Box sx={{ maxWidth: 500, mx: 'auto', mt: 2, p: 2 }}>
-            <UserForm user={data} />
+            <DiseaseForm disease={data} />
         </Box>
     );
 };
 
-export default UserEditView;
+export default DiseaseEditView;

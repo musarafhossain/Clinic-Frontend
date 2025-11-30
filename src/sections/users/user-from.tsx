@@ -52,6 +52,7 @@ const UserForm = ({ user }: UserFormProps) => {
     } = useForm<UserFormValues>({
         resolver: zodResolver(schema),
         defaultValues: {
+            ...user,
             name: user?.name ?? '',
             email: user?.email ?? '',
             password: '',

@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import Retry from '@/sections/common/Retry';
 
 interface InfiniteListWrapperProps<T> {
   queryKey: string | any[];
@@ -132,20 +133,10 @@ export default function InfiniteListWrapper<T>({
       </Box>
 
       {isError && (
-        <Box sx={{ textAlign: 'center', py: 5, color: 'error.main' }}>
-          <ErrorOutlineIcon sx={{ fontSize: 48, mb: 1 }} />
-          <Typography variant="body1" fontWeight={600} sx={{ mb: 2 }}>
-            Failed to load items
-          </Typography>
-          <Button
-            variant="outlined"
-            color="error"
-            startIcon={<RefreshIcon />}
-            onClick={() => refetch()}
-          >
-            Retry
-          </Button>
-        </Box>
+        <Retry
+          onRetry={refetch}
+          message="Failed to load disease"
+        />
       )}
 
       <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
