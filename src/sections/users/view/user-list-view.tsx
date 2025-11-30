@@ -1,13 +1,13 @@
 import InfiniteListWrapper from '@/components/InfiniteListWrapper'
-import ListRow from '../list-row'
-import ListRowSkeleton from '../list-row-skeleton'
+import UserListRow from '../user-list-row'
+import UserListRowSkeleton from '../user-list-row-skeleton'
 import { UserService } from '@/services'
 import { UserModel } from '@/models'
 import AddIcon from '@mui/icons-material/Add'
 import { useRouter } from 'next/navigation'
 import { paths } from '@/routes/paths'
 
-const ListView = () => {
+const UserListView = () => {
   const router = useRouter()
 
   return (
@@ -16,8 +16,8 @@ const ListView = () => {
       queryFn={({ pageParam, search }) =>
         UserService.getList({ page: pageParam, search })
       }
-      renderItem={(user: UserModel) => <ListRow key={user.id} row={user} />}
-      SkeletonComponent={ListRowSkeleton}
+      renderItem={(user: UserModel) => <UserListRow key={user.id} row={user} />}
+      SkeletonComponent={UserListRowSkeleton}
       placeholderMessage="No users found"
       fabProps={{
         onClick: () => router.push(paths.user.new),
@@ -28,4 +28,4 @@ const ListView = () => {
   )
 }
 
-export default ListView
+export default UserListView

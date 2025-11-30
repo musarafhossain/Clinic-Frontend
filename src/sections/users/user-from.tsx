@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +9,7 @@ import {
     Button,
     InputAdornment,
     IconButton,
+    Box,
 } from '@mui/material';
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -21,16 +22,6 @@ import { useRouter } from 'next/navigation';
 import { paths } from '@/routes/paths';
 import { UserModel } from '@/models';
 
-// ---------------- Zod Schema ----------------
-const userSchema = z.object({
-    name: z.string().optional(),
-    email: z.email(),
-    password: z.string().min(6, 'Password must be at least 6 characters').optional(),
-    phone: z.string().optional(),
-}).loose();
-
-export type UserFormValues = z.infer<typeof userSchema>;
-
 interface UserFormProps {
     user?: UserModel;
 }
@@ -40,13 +31,26 @@ const UserForm = ({ user }: UserFormProps) => {
     const queryClient = useQueryClient();
     const router = useRouter();
 
+    const schema = useMemo(() => {
+        return z.object({
+            name: z.string().optional(),
+            email: z.email(),
+            password: user
+                ? z.string().optional()
+                : z.string().min(6, 'Password required (Min: 6 Character)'),
+            phone: z.string().optional(),
+        }).loose();
+    }, [user]);
+
+    type UserFormValues = z.infer<typeof schema>;
+
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
     } = useForm<UserFormValues>({
-        resolver: zodResolver(userSchema),
+        resolver: zodResolver(schema),
         defaultValues: {
             name: user?.name ?? '',
             email: user?.email ?? '',
@@ -55,7 +59,6 @@ const UserForm = ({ user }: UserFormProps) => {
         },
     });
 
-    // ---------------- Mutation for Create + Update ----------------
     const mutation = useMutation({
         mutationFn: (payload: UserFormValues) => {
             if (user?.id) {
@@ -69,7 +72,7 @@ const UserForm = ({ user }: UserFormProps) => {
                 queryClient.invalidateQueries({ queryKey: ['users'] });
                 router.push(paths.user.root);
             } else {
-                toast.error(resp.message)
+                toast.error(resp.message);
             }
         },
         onError: (err: any) => {
@@ -114,9 +117,7 @@ const UserForm = ({ user }: UserFormProps) => {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
-                                    onClick={() =>
-                                        setShowPassword((prev) => !prev)
-                                    }
+                                    onClick={() => setShowPassword((prev) => !prev)}
                                     edge="end"
                                 >
                                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -136,20 +137,30 @@ const UserForm = ({ user }: UserFormProps) => {
                 helperText={errors.phone?.message}
             />
 
-            <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                disabled={mutation.isPending}
-            >
-                {mutation.isPending
-                    ? user
-                        ? 'Updating...'
-                        : 'Creating...'
-                    : user
-                        ? 'Update User'
-                        : 'Create User'}
-            </Button>
+            <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
+                <Button
+                    type="button"
+                    variant="outlined"
+                    disabled={mutation.isPending}
+                    size='large'
+                    fullWidth
+                    onClick={() => reset()}
+                >
+                    Reset
+                </Button>
+
+                <Button
+                    type="submit"
+                    variant="contained"
+                    loading={mutation.isPending}
+                    loadingPosition="end"
+                    size='large'
+                    fullWidth
+                    disabled={mutation.isPending}
+                >
+                    Submit
+                </Button>
+            </Box>
         </form>
     );
 };

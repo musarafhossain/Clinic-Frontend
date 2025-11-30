@@ -1,18 +1,17 @@
 'use client'
-import CreateView from '@/sections/users/view/create-view';
+import UserCreateView from '@/sections/users/view/user-create-view';
 import { useEffect } from 'react'
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
+import { paths } from '@/routes/paths';
 
 const page = () => {
-    const { setTitle } = useAppBarTitle();
+    const { setTitleBar } = useAppBarTitle();
+
     useEffect(() => {
-        document.title = 'Add User';
-        setTitle('Add User');
+        setTitleBar('Add User', paths.user.root);
     }, []);
 
-    return (
-        <CreateView />
-    )
+    return <UserCreateView />;
 }
 
-export default page
+export default page;

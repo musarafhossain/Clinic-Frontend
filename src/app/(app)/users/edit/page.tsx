@@ -1,21 +1,22 @@
 'use client';
 
-import EditView from '@/sections/users/view/edit-view';
+import UserEditView from '@/sections/users/view/user-edit-view';
 import { useEffect } from 'react';
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation';
+import { paths } from '@/routes/paths';
 
 const page = () => {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  const { setTitle } = useAppBarTitle();
+  const id = searchParams.get('id');
+  const { setTitleBar } = useAppBarTitle();
 
   useEffect(() => {
     document.title = 'Edit User';
-    setTitle('Edit User');
-  }, [setTitle]);
+    setTitleBar('Edit User', paths.user.root);
+  }, []);
 
-  return <EditView id={id || ''} />;
+  return <UserEditView id={id || ''} />;
 };
 
 export default page;

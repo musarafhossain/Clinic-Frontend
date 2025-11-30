@@ -29,7 +29,7 @@ interface Props {
     row: UserModel;
 }
 
-const ListRow = ({ row }: Props) => {
+const UserListRow = ({ row }: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [confirmOpen, setConfirmOpen] = useState(false);
     const queryClient = useQueryClient();
@@ -109,9 +109,7 @@ const ListRow = ({ row }: Props) => {
                 divider
             >
                 <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: stringToColor(row?.name || 'U'), color: '#fff' }}>
-                        {row?.name?.[0] ?? '?'}
-                    </Avatar>
+                    <Avatar sx={{ bgcolor: stringToColor(row?.name || 'U'), color: '#fff' }}></Avatar>
                 </ListItemAvatar>
 
                 <ListItemText primary={row.name || 'Not Available'} secondary={row.email} />
@@ -121,7 +119,7 @@ const ListRow = ({ row }: Props) => {
                 <DialogTitle>Delete User</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to delete user "{row.name}"? This action cannot be undone.
+                        Are you sure you want to delete user "{row.name}"?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -140,4 +138,4 @@ const ListRow = ({ row }: Props) => {
     );
 };
 
-export default ListRow;
+export default UserListRow;

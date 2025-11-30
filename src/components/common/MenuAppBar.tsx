@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { useColorScheme } from '@mui/material/styles';
 import { useAuth } from '@/hooks/useAuth';
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
+import { useRouter } from 'next/navigation';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,12 +22,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function MenuAppBar() {
-  const { title } = useAppBarTitle();
+  const { title, backTo } = useAppBarTitle();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openDrawer, setOpenDrawer] = useState(false);
   const { mode, setMode } = useColorScheme();
   const darkMode = mode === 'dark';
-  const { logout } = useAuth()
+  const { logout } = useAuth();
+  const router = useRouter();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,25 +42,33 @@ export default function MenuAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            onClick={() => setOpenDrawer(!openDrawer)}
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
 
-          {title ?
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
-              {title}
-            </Typography>
-            :
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
-              Phyzo
-            </Typography>
-          }
+          {backTo ? (
+            <IconButton
+              onClick={() => router.push(backTo || '/')}
+              edge="start"
+              color="inherit"
+              size="large"
+              sx={{ mr: 1 }}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={() => setOpenDrawer(!openDrawer)}
+              edge="start"
+              color="inherit"
+              size="large"
+              aria-label="menu"
+              sx={{ mr: 1 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+            {title || 'Phyzo'}
+          </Typography>
 
           <IconButton
             size="large"

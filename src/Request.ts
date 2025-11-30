@@ -8,12 +8,11 @@ import type {
 import axios from 'axios';
 import { Config } from '@/Config';
 import { STORAGE_KEYS } from '@/helpers/constant';
-import { getStorage } from '@/utils';
 
 axios.defaults.baseURL = Config.API.URL;
 
 axios.interceptors.request.use((config) => {
-  const accessToken = getStorage(STORAGE_KEYS.JWT);
+  const accessToken = localStorage.getItem("token");
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
@@ -30,7 +29,7 @@ export interface HttpModel extends AxiosStatic { }
 export const Http: HttpModel = axios;
 export const FixedHttp = axios.create();
 FixedHttp.interceptors.request.use((config) => {
-  const accessToken = getStorage(STORAGE_KEYS.JWT);
+  const accessToken = localStorage.getItem("token");
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }

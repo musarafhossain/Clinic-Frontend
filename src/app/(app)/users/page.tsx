@@ -1,17 +1,16 @@
 'use client'
-import ListView from '@/sections/users/view/list-view';
+import UserListView from '@/sections/users/view/user-list-view';
 import { useEffect } from 'react'
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
 
 const page = () => {
-    const { setTitle } = useAppBarTitle();
+    const { setTitleBar } = useAppBarTitle();
     useEffect(() => {
-        document.title = 'Users';
-        setTitle('Users');
+        setTitleBar('Users');
     }, []);
 
     return (
-        <ListView />
+        <UserListView />
     )
 }
 
