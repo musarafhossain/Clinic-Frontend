@@ -1,7 +1,7 @@
 'use client';
 import { Box } from '@mui/material';
 
-const HomeView = () => {
+const ProfileView = () => {
 
   return (
     <Box
@@ -14,9 +14,9 @@ const HomeView = () => {
         gap: 2,
       }}
     >
-      Home
+      Profile
     </Box>
   );
 };
 
-export default HomeView;
+export default ProfileView;

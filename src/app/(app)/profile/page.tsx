@@ -1,16 +1,16 @@
 'use client'
-import AttendanceView from '@/sections/attendance/view/attendance-view';
+import ProfileView from '@/sections/profile/view/profile-view';
 import { useEffect } from 'react'
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
 
 const page = () => {
     const { setTitleBar } = useAppBarTitle();
     useEffect(() => {
-        setTitleBar('Attendance');
+        setTitleBar('Profile');
     }, []);
 
     return (
-        <AttendanceView />
+        <ProfileView />
     )
 }
 

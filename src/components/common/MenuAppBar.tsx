@@ -4,6 +4,7 @@ import { useColorScheme } from '@mui/material/styles';
 import { useAuth } from '@/hooks/useAuth';
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
 import { useRouter } from 'next/navigation';
+import { paths } from '@/routes/paths';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -97,7 +98,12 @@ export default function MenuAppBar() {
               horizontal: 'right',
             }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                router.push(paths.profile);
+              }}
+            >
               <PersonIcon fontSize="small" sx={{ mr: 2 }} />
               Profile
             </MenuItem>
