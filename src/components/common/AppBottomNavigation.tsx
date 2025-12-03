@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
 import { usePathname, useRouter } from 'next/navigation';
@@ -64,7 +64,7 @@ export default function AppBottomNavigation() {
         }}
       >
         <BottomNavigationAction label="Home" value={paths.root} icon={<HomeIcon />} />
-        <BottomNavigationAction label="Attendance" value={paths.attendance} icon={<AccessTimeIcon />} />
+        <BottomNavigationAction label="Attendance" value={paths.attendance} icon={<CalendarMonthIcon />} />
         <BottomNavigationAction label="Patient" value={paths.patient.root} icon={<PeopleIcon />} />
         <BottomNavigationAction label="Profile" value={paths.profile} icon={<PersonIcon />} />
       </BottomNavigation>

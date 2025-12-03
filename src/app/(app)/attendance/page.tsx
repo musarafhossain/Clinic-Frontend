@@ -1,5 +1,5 @@
 'use client'
-import AttendanceView from '@/sections/attendance/view/attendance-view';
+import AttendanceView from '@/sections/attendance/view/attendance-list-view';
 import { useEffect } from 'react'
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
 

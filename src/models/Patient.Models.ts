@@ -7,6 +7,13 @@ export class Disease {
   public amount?: string;
 }
 
+export class Attendance {
+  public is_present?: boolean;
+  public patient_id?: string;
+  public disease?: string;
+  public amount?: string;
+}
+
 export class PatientModel extends BaseModel {
   public name!: string;
   public father_name?: string;
@@ -19,4 +26,5 @@ export class PatientModel extends BaseModel {
   public enrollment_date?: string;
   public amount_paid?: number;
   public total_bill?: number;
+  public attendance?: Attendance;
 }
