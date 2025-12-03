@@ -1,5 +1,6 @@
 import { UserModel } from "./User.Models"
 import { DiseaseModel } from "./Disease.Models"
+import { PatientModel } from "./Patient.Models"
 
 export class ResponseModel<T> {
   data!: T
@@ -17,5 +18,6 @@ export class PageModel<T> {
 
 export {
   UserModel,
-  DiseaseModel
+  DiseaseModel,
+  PatientModel,
 }

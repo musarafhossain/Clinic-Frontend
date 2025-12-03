@@ -15,7 +15,7 @@ const DiseaseListView = () => {
     <InfiniteListWrapper
       queryKey="diseases"
       queryFn={({ pageParam, search }) =>
-        DiseaseService.getList({ page: pageParam, search })
+        DiseaseService.getList({ page: pageParam, search, limit: 10 })
       }
       renderItem={(disease: DiseaseModel) => <DiseaseListRow key={disease.id} row={disease} />}
       SkeletonComponent={DiseaseListRowSkeleton}
