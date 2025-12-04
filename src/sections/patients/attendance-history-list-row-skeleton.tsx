@@ -4,7 +4,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 
-const AttendanceRowSkeleton = () => {
+const AttendanceHistoryRowSkeleton = () => {
     return (
         <ListItem
             divider
@@ -26,4 +26,4 @@ const AttendanceRowSkeleton = () => {
     );
 };
 
-export default AttendanceRowSkeleton;
+export default AttendanceHistoryRowSkeleton;

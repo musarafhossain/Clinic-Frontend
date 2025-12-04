@@ -135,7 +135,7 @@ export default function InfiniteListWrapper<T>({
       {isError && (
         <Retry
           onRetry={refetch}
-          message="Failed to load disease"
+          message="Failed to load data"
         />
       )}
 

@@ -59,4 +59,41 @@ export class PatientService extends BaseService {
                 .catch((err) => reject(err));
         });
     }
+
+    static addPayment(patientId: string, params = {}): Promise<ResponseModel<any>> {
+        return new Promise((resolve, reject) => {
+            this.Http.post(`${this.API_PREFIX}/add-payment/${patientId}`, params)
+                .then((res) => resolve(res?.data))
+                .catch((err) => reject(err));
+        });
+    }
+
+    static deletePaymentHistory(id: string, params = {}): Promise<ResponseModel<any>> {
+        return new Promise((resolve, reject) => {
+            this.Http.delete(`${this.API_PREFIX}/payment-history/${id}`, {
+                params,
+                cancelToken: PatientService.source?.token,
+            })
+                .then((res) => resolve(res?.data))
+                .catch((err) => reject(err));
+        });
+    }
+
+    static getPatientPaymentHistory(params?: { search?: string; page?: number; limit?: number; patientId: string }): Promise<ResponseModel<PageModel<any>>> {
+        return new Promise((resolve, reject) => {
+            this.Http.get(this.API_PREFIX + '/payment-history', {
+                params: {
+                    search: params?.search
+                        ? encodeURIComponent(params.search)
+                        : undefined,
+                    page: params?.page ?? 1,
+                    limit: params?.limit,
+                    patientId: params?.patientId,
+                },
+                cancelToken: PatientService.source?.token
+            })
+                .then((res) => resolve(res?.data))
+                .catch((err) => reject(err));
+        });
+    }
 }

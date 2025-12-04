@@ -19,7 +19,6 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import Chip from '@mui/material/Chip';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
@@ -28,6 +27,14 @@ import { paths } from '@/routes/paths';
 import { PATIENT_STATUS, GENDER } from '@/helpers/enum';
 import { Stack } from '@mui/material';
 import dayjs from 'dayjs'
+import PaymentsIcon from '@mui/icons-material/Payments';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import MenuList from '@mui/material/MenuList';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import { Divider } from '@mui/material';
+
 
 interface Props {
     row: PatientModel;
@@ -66,15 +73,6 @@ const PatientListRow = ({ row, status }: Props) => {
     const closeConfirmDialog = () => setConfirmOpen(false);
     const open = Boolean(anchorEl);
 
-    const handleView = () => {
-        closeMenu();
-        router.push(paths.patient.view(row.id || ''));
-    };
-    const handleEdit = () => {
-        closeMenu();
-        router.push(paths.patient.edit(row.id || ''));
-    };
-
     return (
         <>
             <ListItem
@@ -83,7 +81,6 @@ const PatientListRow = ({ row, status }: Props) => {
                         <IconButton onClick={openMenu}>
                             <MoreVertIcon />
                         </IconButton>
-
                         <Popover
                             open={open}
                             anchorEl={anchorEl}
@@ -91,23 +88,67 @@ const PatientListRow = ({ row, status }: Props) => {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                         >
-                            <MenuItem onClick={handleView}>
-                                <VisibilityIcon fontSize="small" sx={{ mr: 2 }} />
-                                View
-                            </MenuItem>
-
-                            <MenuItem onClick={handleEdit}>
-                                <EditIcon fontSize="small" sx={{ mr: 2 }} />
-                                Edit
-                            </MenuItem>
-
-                            <MenuItem
-                                onClick={openConfirmDialog}
-                                sx={{ color: 'error.main' }}
-                            >
-                                <DeleteIcon fontSize="small" sx={{ mr: 2, color: 'error.main' }} />
-                                Delete
-                            </MenuItem>
+                            <MenuList sx={{ width: 250, maxWidth: '100%' }}>
+                                <MenuItem onClick={() => {
+                                    closeMenu();
+                                    router.push(paths.patient.view(row.id || ''));
+                                }}>
+                                    <ListItemIcon>
+                                        <VisibilityIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>View</ListItemText>
+                                </MenuItem>
+                                <MenuItem onClick={() => {
+                                    closeMenu();
+                                    router.push(paths.patient.edit(row.id || ''));
+                                }}>
+                                    <ListItemIcon>
+                                        <EditIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Edit</ListItemText>
+                                </MenuItem>
+                                <Divider />
+                                <MenuItem
+                                    onClick={() => {
+                                        closeMenu();
+                                        router.push(paths.patient.add_payment(row.id || ''));
+                                    }}
+                                >
+                                    <ListItemIcon>
+                                        <PaymentsIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Add Payment</ListItemText>
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => {
+                                        closeMenu();
+                                        router.push(paths.patient.attendance_history(row.id || ''));
+                                    }}
+                                >
+                                    <ListItemIcon>
+                                        <EventNoteIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Attendance History</ListItemText>
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => {
+                                        closeMenu();
+                                        router.push(paths.patient.payment_history(row.id || ''));
+                                    }}
+                                >
+                                    <ListItemIcon>
+                                        <ReceiptLongIcon fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Payment History</ListItemText>
+                                </MenuItem>
+                                <Divider />
+                                <MenuItem onClick={openConfirmDialog} sx={{ color: 'error.main' }}>
+                                    <ListItemIcon>
+                                        <DeleteIcon fontSize="small" sx={{ color: 'error.main' }} />
+                                    </ListItemIcon>
+                                    <ListItemText>Delete</ListItemText>
+                                </MenuItem>
+                            </MenuList>
                         </Popover>
                     </>
                 }
@@ -140,20 +181,6 @@ const PatientListRow = ({ row, status }: Props) => {
                                         ? "F"
                                         : "O"}
                             </Avatar>}
-                            {/* {row.status && (
-                                <Chip
-                                    label={row.status.charAt(0).toUpperCase() + row.status.slice(1).toLowerCase()}
-                                    variant='outlined'
-                                    color={
-                                        row.status === PATIENT_STATUS.ONGOING
-                                            ? "warning"
-                                            : row.status === PATIENT_STATUS.COMPLETED
-                                                ? "success"
-                                                : "error"
-                                    }
-                                    size="small"
-                                />
-                            )} */}
                         </Stack>
                     </Stack>
                     <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between'>

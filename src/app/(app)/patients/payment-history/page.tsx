@@ -1,10 +1,9 @@
 'use client';
-
-import UserEditView from '@/sections/users/view/user-edit-view';
 import { useEffect } from 'react';
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
 import { useSearchParams } from 'next/navigation';
 import { paths } from '@/routes/paths';
+import PaymentHistoryListView from '@/sections/patients/view/payment-history-view';
 
 const page = () => {
   const searchParams = useSearchParams();
@@ -12,10 +11,10 @@ const page = () => {
   const { setTitleBar } = useAppBarTitle();
 
   useEffect(() => {
-    setTitleBar('Edit User', paths.user.root);
+    setTitleBar('Payment History', paths.patient.root);
   }, []);
 
-  return <UserEditView id={id || ''} />;
+  return PaymentHistoryListView(id as string);
 };
 
 export default page;
