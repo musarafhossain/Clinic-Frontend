@@ -172,7 +172,7 @@ const PatientListRow = ({ row, status }: Props) => {
                                         ? "#4a5ce2ff"
                                         : row?.gender === GENDER.FEMALE
                                             ? "#e91ea9ff"
-                                            : "#9E9E9E"
+                                            : "#cacf5fff"
                                 }}
                             >
                                 {row?.gender === GENDER.MALE

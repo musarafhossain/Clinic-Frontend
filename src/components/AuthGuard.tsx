@@ -4,6 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { paths } from "@/routes/paths";
+import SpalshScreen from "./SpalshScreen";
 
 export default function AuthGuard({ children }: { children: ReactNode }) {
   const { token, loading } = useAuth();
@@ -16,7 +17,7 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
   }, [loading, token, router]);
 
   if (loading) {
-    return <>Loading...</>;
+    return <SpalshScreen />;
   }
 
   if (!token) {

@@ -39,7 +39,7 @@ export class AttendanceService extends BaseService {
 
     static getPatientAttendances(params?: { search?: string; page?: number; limit?: number; patientId: string }): Promise<ResponseModel<PageModel<any>>> {
         return new Promise((resolve, reject) => {
-            this.Http.get(this.API_PREFIX + '/patient-attendances', {
+            this.Http.get(this.API_PREFIX + '/attendance-history', {
                 params: {
                     search: params?.search
                         ? encodeURIComponent(params.search)
