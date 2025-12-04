@@ -26,5 +26,6 @@ export class PatientModel extends BaseModel {
   public enrollment_date?: string;
   public amount_paid?: number;
   public total_bill?: number;
+  public total_attendance?: number;
   public attendance?: Attendance;
 }

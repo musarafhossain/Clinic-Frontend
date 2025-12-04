@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 import { PatientService } from '@/services';
 import dayjs from 'dayjs';
 import ListItemText from '@mui/material/ListItemText';
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 interface Props {
     row: any;
@@ -65,17 +65,17 @@ const PaymentHistoryListRow = ({ row, patientId }: Props) => {
                             color: '#fff',
                         }}
                     >
-                        <CurrencyRupeeIcon fontSize="medium" />
+                        <AttachMoneyIcon fontSize="medium" />
                     </Avatar>
                 </ListItemAvatar>
 
                 <ListItemText
                     primary={
-                        <span style={{ color: 'green', fontWeight: 600 }}>
-                            + ₹{row.amount}
+                        <span style={{ color: 'green', fontWeight: 600, fontSize: '1.2rem' }}>
+                            ₹{row.amount}
                         </span>
                     }
-                    secondary={dayjs(row.created_at).format('YYYY-MM-DD')}
+                    secondary={dayjs(row.created_at).format('YYYY-MM-DD hh:mm A')}
                 />
             </ListItem>
 

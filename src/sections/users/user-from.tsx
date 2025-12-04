@@ -24,9 +24,10 @@ import { UserModel } from '@/models';
 
 interface UserFormProps {
     user?: UserModel;
+    profile?: boolean;
 }
 
-const UserForm = ({ user }: UserFormProps) => {
+const UserForm = ({ user, profile = false }: UserFormProps) => {
     const [showPassword, setShowPassword] = useState(false);
     const queryClient = useQueryClient();
     const router = useRouter();
@@ -70,8 +71,12 @@ const UserForm = ({ user }: UserFormProps) => {
         onSuccess: (resp) => {
             if (resp.success) {
                 toast.success(resp.message);
-                queryClient.invalidateQueries({ queryKey: ['users'] });
-                router.push(paths.user.root);
+                if (profile) {
+                    router.push(paths.profile);
+                } else {
+                    queryClient.invalidateQueries({ queryKey: ['users'] });
+                    router.push(paths.user.root);
+                }
             } else {
                 toast.error(resp.message);
             }

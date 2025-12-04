@@ -62,10 +62,6 @@ const DiseaseListRow = ({ row }: Props) => {
     const closeConfirmDialog = () => setConfirmOpen(false);
     const open = Boolean(anchorEl);
 
-    const handleView = () => {
-        closeMenu();
-        router.push(paths.disease.view(row.id || ''));
-    };
     const handleEdit = () => {
         closeMenu();
         router.push(paths.disease.edit(row.id || ''));
@@ -87,11 +83,6 @@ const DiseaseListRow = ({ row }: Props) => {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                         >
-                            <MenuItem onClick={handleView}>
-                                <VisibilityIcon fontSize="small" sx={{ mr: 2 }} />
-                                View
-                            </MenuItem>
-
                             <MenuItem onClick={handleEdit}>
                                 <EditIcon fontSize="small" sx={{ mr: 2 }} />
                                 Edit

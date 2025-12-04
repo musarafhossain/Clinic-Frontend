@@ -1,6 +1,6 @@
 'use client';
 
-import PatientEditView from '@/sections/patients/view/patient-edit-view';
+import PatientDetailsView from '@/sections/patients/view/patient-details-view';
 import { useEffect } from 'react';
 import { useAppBarTitle } from '@/context/AppBarTitleContext';
 import { useSearchParams } from 'next/navigation';
@@ -12,10 +12,10 @@ const page = () => {
   const { setTitleBar } = useAppBarTitle();
 
   useEffect(() => {
-    setTitleBar('Edit Patient', paths.patient.root);
+    setTitleBar('Patient View', paths.patient.root);
   }, []);
 
-  return <PatientEditView id={id || ''} />;
+  return <PatientDetailsView id={id || ''} />;
 };
 
 export default page;

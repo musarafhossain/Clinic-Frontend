@@ -10,7 +10,6 @@ export const paths = {
     root: `/diseases`,
     new: `/diseases/new`,
     edit: (id: string) => `/diseases/edit?id=${id}`,
-    view: (id: string) => `/diseases/view?id=${id}`,
   },
   patient: {
     root: `/patients`,
@@ -23,6 +22,7 @@ export const paths = {
   },
   attendance: '/attendance',
   profile: '/profile',
+  profile_edit: (id: string) => `/profile/edit?id=${id}`,
   comingSoon: '/coming-soon',
   maintenance: '/maintenance',
   page403: '/error/403',

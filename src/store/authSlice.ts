@@ -1,16 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface User {
-  id: number;
-  name: string | null;
-  email: string;
-  phone: string | null;
-  created_at: string;
-  updated_at: string;
-}
+import { UserModel } from "@/models";
 
 interface AuthState {
-  user: User | null;
+  user: UserModel | null;
   token: string | null;
   loading: boolean;
   error: string | null;
@@ -31,7 +23,7 @@ const authSlice = createSlice({
   reducers: {
     hydrateAuth(
       state,
-      action: PayloadAction<{ user: User | null; token: string | null }>
+      action: PayloadAction<{ user: UserModel | null; token: string | null }>
     ) {
       state.user = action.payload.user;
       state.token = action.payload.token;
@@ -46,7 +38,7 @@ const authSlice = createSlice({
 
     loginSuccess(
       state,
-      action: PayloadAction<{ user: User; token: string }>
+      action: PayloadAction<{ user: UserModel; token: string }>
     ) {
       state.loading = false;
       state.user = action.payload.user;

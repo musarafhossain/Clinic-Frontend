@@ -16,6 +16,7 @@ import HealingIcon from '@mui/icons-material/Healing';
 import InfoIcon from '@mui/icons-material/Info';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@mui/material/Button';
+import { Config } from '@/Config';
 
 type Props = {
     open: boolean;
@@ -80,7 +81,7 @@ export default function AppBarDrawer({ open, setOpen }: Props) {
 
             <Box sx={{ mt: "auto", p: 2, textAlign: "center" }}>
                 <Typography variant="caption" color="text.secondary">
-                    App Version 1.0.0
+                    App Version {Config.APP.VERSION}
                 </Typography>
             </Box>
 

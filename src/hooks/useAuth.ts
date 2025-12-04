@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 import { paths } from "@/routes/paths";
 import { AuthService } from "@/services";
+import { UserModel } from "@/models";
 
 export const useAuth = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -41,7 +42,7 @@ export const useAuth = () => {
                 const me = await AuthService.me();
                 dispatch(
                     loginSuccessAction({
-                        user: me?.data || me,
+                        user: me?.user || null,
                         token,
                     })
                 );
@@ -73,7 +74,7 @@ export const useAuth = () => {
         validateUser();
     }, []);
 
-    const loginSuccess = (payload: { user: any; token: string }) => {
+    const loginSuccess = (payload: { user: UserModel; token: string }) => {
         if (typeof window !== "undefined") {
             localStorage.setItem("token", payload.token);
             localStorage.setItem("user", JSON.stringify(payload.user));

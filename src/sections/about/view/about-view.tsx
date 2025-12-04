@@ -1,8 +1,7 @@
 'use client';
 import { Box, Typography, Container, Divider, Avatar } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
-
-const APP_VERSION = "v1.0.3";
+import { Config } from '@/Config';
 
 const AboutView = () => {
     return (
@@ -19,7 +18,7 @@ const AboutView = () => {
                 >
                     <InfoIcon sx={{ fontSize: 80 }} />
                 </Avatar>
-                <Typography variant="h4" component="h1" fontWeight='bold' gutterBottom>
+                <Typography variant="h5" component="h1" fontWeight='bold' gutterBottom>
                     About Phyzo
                 </Typography>
                 <Typography variant="body1" color="text.secondary" sx={{ px: 1 }}>
@@ -31,7 +30,7 @@ const AboutView = () => {
 
             <Box sx={{ textAlign: 'center', mt: 6 }}>
                 <Typography variant="body2" color="text.secondary">
-                    App Version: {APP_VERSION}
+                    App Version: {Config.APP.VERSION}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     &copy; {new Date().getFullYear()} Phyzo. All rights reserved.

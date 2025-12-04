@@ -34,7 +34,7 @@ interface LoginParams {
 export default function SignInView() {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
-    const { loginSuccess, user, token } = useAuth();
+    const { loginSuccess, user } = useAuth();
 
     useEffect(() => {
         if (user) router.push(paths.root);

@@ -1,6 +1,7 @@
 export type ConfigValue = {
   APP: {
     NAME: string;
+    VERSION: string;
   },
   API: {
     URL: string;
@@ -9,7 +10,8 @@ export type ConfigValue = {
 
 export const Config: ConfigValue = {
   APP: {
-    NAME: 'Physiotherapy',
+    NAME: 'Phyzo',
+    VERSION: 'v1.0.0'
   },
   API: {
     URL: process.env.NEXT_PUBLIC_API_URL!,
