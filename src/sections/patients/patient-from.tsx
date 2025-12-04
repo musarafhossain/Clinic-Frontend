@@ -22,6 +22,7 @@ import { PatientModel, DiseaseModel } from '@/models';
 import { GENDER, PATIENT_STATUS } from '@/helpers/enum';
 import { useRouter } from 'next/navigation';
 import { paths } from '@/routes/paths';
+import { Controller } from "react-hook-form";
 
 export const patientSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -40,8 +41,8 @@ export const patientSchema = z.object({
         name: z.string().optional(),
         amount: z.union([z.string(), z.number()]).optional(),
     })
-    .nullable()
-    .optional(),
+        .nullable()
+        .optional(),
 }).loose();
 
 type FormValues = z.infer<typeof patientSchema>;
@@ -66,6 +67,7 @@ const PatientForm = ({ patient }: Props) => {
         setValue,
         reset,
         watch,
+        control,
         formState: { errors },
     } = useForm<FormValues>({
         resolver: zodResolver(patientSchema),
@@ -109,7 +111,9 @@ const PatientForm = ({ patient }: Props) => {
             toast.error(err?.response?.data?.message || 'Operation failed'),
     });
 
-    const onSubmit = (data: FormValues) => mutation.mutate(data);
+    const onSubmit = (data: FormValues) => {
+        mutation.mutate(data);
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -141,11 +145,18 @@ const PatientForm = ({ patient }: Props) => {
             />
             <FormControl sx={{ mb: 2 }}>
                 <FormLabel>Gender *</FormLabel>
-                <RadioGroup row {...register('gender')} defaultValue={patient?.gender ?? GENDER.MALE}>
-                    <FormControlLabel value={GENDER.MALE} control={<Radio />} label="Male" />
-                    <FormControlLabel value={GENDER.FEMALE} control={<Radio />} label="Female" />
-                    <FormControlLabel value={GENDER.OTHERS} control={<Radio />} label="Others" />
-                </RadioGroup>
+                <Controller
+                    name="gender"
+                    control={control}
+                    defaultValue={patient?.gender ?? GENDER.MALE}
+                    render={({ field }) => (
+                        <RadioGroup row {...field}>
+                            <FormControlLabel value={GENDER.MALE} control={<Radio />} label="Male" />
+                            <FormControlLabel value={GENDER.FEMALE} control={<Radio />} label="Female" />
+                            <FormControlLabel value={GENDER.OTHERS} control={<Radio />} label="Others" />
+                        </RadioGroup>
+                    )}
+                />
             </FormControl>
             <TextField
                 label="Phone"
@@ -185,12 +196,19 @@ const PatientForm = ({ patient }: Props) => {
                 isOptionEqualToValue={(option, value) => Number(option?.id) === Number(value?.id)}
             />
             <FormControl sx={{ mb: 2 }}>
-                <FormLabel>Status</FormLabel>
-                <RadioGroup row {...register('status')} defaultValue={patient?.status ?? PATIENT_STATUS.ONGOING}>
-                    <FormControlLabel value={PATIENT_STATUS.ONGOING} control={<Radio />} label="Ongoing" />
-                    <FormControlLabel value={PATIENT_STATUS.COMPLETED} control={<Radio />} label="Completed" />
-                    <FormControlLabel value={PATIENT_STATUS.CANCELLED} control={<Radio />} label="Cancelled" />
-                </RadioGroup>
+                <FormLabel>Status *</FormLabel>
+                <Controller
+                    name="status"
+                    control={control}
+                    defaultValue={patient?.status ?? PATIENT_STATUS.ONGOING}
+                    render={({ field }) => (
+                        <RadioGroup row {...field}>
+                            <FormControlLabel value={PATIENT_STATUS.ONGOING} control={<Radio />} label="Ongoing" />
+                            <FormControlLabel value={PATIENT_STATUS.COMPLETED} control={<Radio />} label="Completed" />
+                            <FormControlLabel value={PATIENT_STATUS.CANCELLED} control={<Radio />} label="Cancelled" />
+                        </RadioGroup>
+                    )}
+                />
             </FormControl>
             <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
                 <Button
