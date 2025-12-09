@@ -35,7 +35,6 @@ export const paths = {
     signIn: `/sign-in`,
     verify: `/verify`,
     signUp: `/sign-up`,
-    updatePassword: `/update-password`,
-    resetPassword: `/reset-password`,
+    forgotPassword: `/forgot-password`,
   },
 };

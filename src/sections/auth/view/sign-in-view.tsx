@@ -9,8 +9,11 @@ import {
     CircularProgress,
     Typography,
     Paper,
+    Stack,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +23,8 @@ import { AuthService } from "@/services";
 import { useAuth } from "@/hooks/useAuth";
 import toast from "react-hot-toast";
 import { paths } from "@/routes/paths";
+import Logo from "@/assets/icon.png";
+import { Config } from "@/Config";
 
 const schema = z.object({
     email: z.email("Invalid email"),
@@ -44,11 +49,11 @@ export default function SignInView() {
         mutationFn: (params: LoginParams) => AuthService.login(params),
         onSuccess: (data: any) => {
             loginSuccess({ user: data.user, token: data.token });
-            toast.success('Login success!')
+            toast.success('Login success!');
             router.push(paths.root);
         },
         onError: (error: any) => {
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Login failed");
         },
     });
 
@@ -63,7 +68,7 @@ export default function SignInView() {
     return (
         <Box>
             <Paper
-                elevation={4}
+                elevation={0}
                 sx={{
                     maxWidth: 380,
                     mx: "auto",
@@ -75,14 +80,25 @@ export default function SignInView() {
                     gap: 3,
                 }}
             >
-                <Typography variant="h5" align="center" fontWeight={600}>
-                    Sign In
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <img src={Logo.src} alt="Logo" width={60} height={60} />
+                </Box>
+
+                <Typography variant="h5" align="center" fontWeight={700}>
+                    Welcome to {Config.APP.NAME}
+                </Typography>
+
+                <Typography
+                    align="center"
+                    sx={{ color: "text.secondary", fontSize: 14, mt: -1 }}
+                >
+                    Sign in to your account
                 </Typography>
 
                 <Box
                     component="form"
                     onSubmit={handleSubmit(onSubmit)}
-                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                    sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 4 }}
                 >
                     <TextField
                         label="Email"
@@ -90,6 +106,15 @@ export default function SignInView() {
                         error={!!errors.email}
                         helperText={errors.email?.message}
                         fullWidth
+                        slotProps={{
+                            input: {
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <EmailIcon fontSize="small" color="action" />
+                                    </InputAdornment>
+                                ),
+                            },
+                        }}
                     />
 
                     <TextField
@@ -99,19 +124,41 @@ export default function SignInView() {
                         error={!!errors.password}
                         helperText={errors.password?.message}
                         fullWidth
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={() => setShowPassword((prev) => !prev)}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
+                        slotProps={{
+                            input: {
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <LockIcon fontSize="small" color="action" />
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={() => setShowPassword((prev) => !prev)}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            },
                         }}
                     />
+
+                    <Stack justifyContent='end'>
+                        <Typography
+                            sx={{
+                                textAlign: "right",
+                                color: "primary.main",
+                                fontSize: 14,
+                                cursor: "pointer",
+                                fontWeight: 500,
+                            }}
+                            onClick={() => router.push(paths.auth.forgotPassword)}
+                        >
+                            Forgot password?
+                        </Typography>
+                    </Stack>
 
                     <Button
                         type="submit"
