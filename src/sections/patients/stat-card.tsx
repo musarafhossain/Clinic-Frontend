@@ -4,19 +4,22 @@ import { Paper, Typography, Stack } from "@mui/material";
 interface StatCardProps {
     title: string;
     value: string | number;
+    color?: string; // ✅ added
 }
 
-export default function StatCard({ title, value }: StatCardProps) {
+export default function StatCard({ title, value, color }: StatCardProps) {
     return (
         <Paper
             elevation={0}
             sx={{
                 p: 2,
                 borderRadius: 2,
-                backgroundColor: (theme) =>
-                    theme.palette.mode === "dark"
-                        ? "rgba(255,255,255,0.05)"
-                        : "#f4f4f4ff",
+                backgroundColor: color
+                    ? color
+                    : (theme) =>
+                          theme.palette.mode === "dark"
+                              ? "rgba(255,255,255,0.05)"
+                              : "#f4f4f4ff",
             }}
         >
             <Stack direction="row" spacing={2} alignItems="center">
@@ -32,10 +35,7 @@ export default function StatCard({ title, value }: StatCardProps) {
                         {title}
                     </Typography>
 
-                    <Typography
-                        variant="h5"
-                        sx={{ fontWeight: 700 }}
-                    >
+                    <Typography variant="h5" sx={{ fontWeight: 700 }}>
                         {value}
                     </Typography>
                 </Stack>
