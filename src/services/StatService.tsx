@@ -3,11 +3,13 @@ import { ResponseModel } from '@/models';
 
 export class StatService extends BaseService {
     static API_PREFIX = '/stats';
-    static home(params = {}): Promise<ResponseModel<any>> {
+    static home(params?: { today?: string; }): Promise<ResponseModel<any>> {
         StatService.initCancelToken();
         return new Promise((resolve, reject) => {
             this.Http.get(this.API_PREFIX + '/home', {
-                params: params,
+                params: {
+                    today: params?.today,
+                },
                 cancelToken: StatService.source?.token
             })
                 .then((res) => resolve(res?.data))

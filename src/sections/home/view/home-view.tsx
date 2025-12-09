@@ -13,7 +13,9 @@ const HomeView = () => {
 
   const homeStatsQuery = useQuery({
     queryKey: ['home-stats'],
-    queryFn: () => StatService.home(),
+    queryFn: () => StatService.home({
+      today: dayjs().format("YYYY-MM-DD"),
+    }),
     select: (response) => response.data,
   });
 
