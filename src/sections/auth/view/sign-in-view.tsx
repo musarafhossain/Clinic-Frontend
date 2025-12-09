@@ -105,6 +105,7 @@ export default function SignInView() {
                         {...register("email")}
                         error={!!errors.email}
                         helperText={errors.email?.message}
+                        placeholder="Enter your email"
                         fullWidth
                         slotProps={{
                             input: {
@@ -123,6 +124,7 @@ export default function SignInView() {
                         {...register("password")}
                         error={!!errors.password}
                         helperText={errors.password?.message}
+                        placeholder="Enter your password"
                         fullWidth
                         slotProps={{
                             input: {
