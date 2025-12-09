@@ -3,12 +3,31 @@ import { Box, Stack, Typography, Divider, Grid } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import StatCard from '@/sections/patients/stat-card';
 import { useTheme } from '@mui/material';
+import { StatService } from '@/services/StatService';
+import { useQuery } from '@tanstack/react-query';
+import dayjs from "dayjs";
 
 const HomeView = () => {
   const theme = useTheme();
-  const attendanceData = [5, 8, 7, 6, 9, 10, 4];
-  const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const isDark = theme.palette.mode === "dark";
+
+  const homeStatsQuery = useQuery({
+    queryKey: ['home-stats'],
+    queryFn: () => StatService.home(),
+    select: (response) => response.data,
+  });
+
+  // Set last 7 days attendace
+  const attendanceData = homeStatsQuery.isLoading
+    ? [0, 0, 0, 0, 0, 0, 0]
+    : homeStatsQuery.data.last_7_days_attendance;
+  const labels = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = dayjs().subtract(i, "day");
+    labels.push(d.format("ddd"));
+  }
+
+  const maxValue = Math.max(...attendanceData);
 
   const colors = {
     attendance: isDark ? "#9a0064ff" : "#f9e5f5",
@@ -32,15 +51,22 @@ const HomeView = () => {
   const chartSetting = {
     yAxis: [
       {
-        label: 'Attendaces',
-        width: 25,
+        min: 0,
+        width: 20,
+        max: maxValue,
+        tickNumber: maxValue + 1,
+        valueFormatter: (v: number) => {
+          if (v % 1 !== 0) return "";
+          if (v < 0 || v > maxValue) return "";
+          return v.toString();
+        },
       },
     ],
     xAxis: [
       {
-        label: 'Days',
+        label: "Days",
         data: labels,
-      }
+      },
     ],
     height: 200,
     hideLegend: true,
@@ -56,10 +82,18 @@ const HomeView = () => {
 
         <Grid container spacing={2}>
           <Grid size={6}>
-            <StatCard title="Today's Attendance" color={colors.attendance} value={0} />
+            <StatCard
+              title="Today's Attendance"
+              color={colors.attendance}
+              value={homeStatsQuery?.data?.todays_stats?.todays_attendance ?? 0}
+            />
           </Grid>
           <Grid size={6}>
-            <StatCard title="Todays' Revenue" color={colors.revenue} value={`₹ 0`} />
+            <StatCard
+              title="Todays' Revenue"
+              color={colors.revenue}
+              value={`₹ ${homeStatsQuery?.data?.todays_stats?.todays_revenue ?? 0}`}
+            />
           </Grid>
         </Grid>
       </Box>
@@ -71,16 +105,32 @@ const HomeView = () => {
         <Divider sx={{ mb: 1 }} />
         <Grid container spacing={2}>
           <Grid size={6}>
-            <StatCard title="Total Patient" color={colors.total} value={0} />
+            <StatCard
+              title="Total Patient"
+              color={colors.total}
+              value={homeStatsQuery?.data?.patients_stats?.total_patient ?? 0}
+            />
           </Grid>
           <Grid size={6}>
-            <StatCard title="Ongoing Patient" color={colors.ongoing} value={0} />
+            <StatCard
+              title="Ongoing Patient"
+              color={colors.ongoing}
+              value={homeStatsQuery?.data?.patients_stats?.ongoing_patient ?? 0}
+            />
           </Grid>
           <Grid size={6}>
-            <StatCard title="Completed Patient" color={colors.completed} value={0} />
+            <StatCard
+              title="Completed Patient"
+              color={colors.completed}
+              value={homeStatsQuery?.data?.patients_stats?.completed_patient ?? 0}
+            />
           </Grid>
           <Grid size={6}>
-            <StatCard title="Cancelled Patient" color={colors.cancelled} value={0} />
+            <StatCard
+              title="Cancelled Patient"
+              color={colors.cancelled}
+              value={homeStatsQuery?.data?.patients_stats?.cancelled_patient ?? 0}
+            />
           </Grid>
         </Grid>
       </Box>
