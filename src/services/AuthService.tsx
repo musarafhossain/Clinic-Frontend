@@ -1,8 +1,9 @@
 import BaseService from './BaseService';
+import { ResponseModel, LoginResponseModel, UserModel } from '@/models';
 
 export class AuthService extends BaseService {
     static API_PREFIX = '/auth';
-    static login(params = {}): Promise<any> {
+    static login(params = {}): Promise<ResponseModel<LoginResponseModel>> {
         AuthService.initCancelToken();
         return new Promise((resolve, reject) => {
             this.Http.post(this.API_PREFIX + '/login', params, { cancelToken: AuthService.source?.token })
@@ -11,7 +12,7 @@ export class AuthService extends BaseService {
         });
     }
 
-    static me(params = {}): Promise<any> {
+    static me(params = {}): Promise<ResponseModel<UserModel>> {
         AuthService.initCancelToken();
         return new Promise((resolve, reject) => {
             this.Http.get(this.API_PREFIX + '/me', {

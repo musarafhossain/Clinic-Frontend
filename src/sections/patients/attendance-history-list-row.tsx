@@ -33,7 +33,7 @@ const AttendanceHistoryListRow = ({ row }: Props) => {
             </ListItemAvatar>
 
             <ListItemText
-                primary={dayjs(row.datetime).format('YYYY-MM-DD')}
+                primary={dayjs(row.datetime).format('YYYY-MM-DD | HH:mm A')}
                 secondary={row.disease_name}
             />
         </ListItem>

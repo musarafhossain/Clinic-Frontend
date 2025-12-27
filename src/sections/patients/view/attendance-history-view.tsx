@@ -10,7 +10,7 @@ const AttendanceHistoryListView = (patientId: string) => {
     <InfiniteListWrapper
       queryKey={['attendance-history', patientId]}
       queryFn={({ pageParam, search }) =>
-        AttendanceService.getPatientAttendances({ page: pageParam, search, limit: 10, patientId })
+        AttendanceService.getListByPatientId(patientId, { page: pageParam, search, limit: 10 })
       }
       renderItem={(attendance: any) => <AttendanceHistoryListRow key={attendance.id} row={attendance} />}
       SkeletonComponent={AttendanceHistoryListRowSkeleton}

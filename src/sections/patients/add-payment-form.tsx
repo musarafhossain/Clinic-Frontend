@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { PatientService } from '@/services';
+import { PaymentHistoryService } from '@/services';
 import { useRouter } from 'next/navigation';
 import { paths } from '@/routes/paths';
 
@@ -45,7 +45,7 @@ const AddPaymentForm = ({ patientId }: Props) => {
 
     const mutation = useMutation({
         mutationFn: (payload: DiseaseFormValues) => {
-            return PatientService.addPayment(patientId, payload);
+            return PaymentHistoryService.create(patientId, payload);
         },
         onSuccess: (resp) => {
             if (resp.success) {

@@ -11,7 +11,7 @@ function InfoRow({ icon, label, value, allowWrap }: RowProps) {
     return (
         <Stack direction="row" spacing={2} alignItems="center">
             {icon}
-            <Box>
+            <Box sx={{ minWidth: 0 }}>
                 <Typography
                     variant="body2"
                     sx={{ color: "text.secondary", fontSize: "0.85rem" }}
@@ -23,9 +23,17 @@ function InfoRow({ icon, label, value, allowWrap }: RowProps) {
                     variant="body1"
                     sx={{
                         color: "text.primary",
-                        whiteSpace: allowWrap ? "normal" : "nowrap",
-                        overflowWrap: "break-word",
-                        wordBreak: "break-word",
+                        ...(allowWrap
+                            ? {
+                                whiteSpace: "normal",
+                                overflowWrap: "break-word",
+                                wordBreak: "break-word",
+                            }
+                            : {
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                            }),
                     }}
                 >
                     {value || "-"}

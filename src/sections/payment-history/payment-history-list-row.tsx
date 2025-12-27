@@ -76,7 +76,7 @@ const PaymentHistoryListRow = ({ row, patientId }: Props) => {
                             ₹{row.amount}
                         </span>
                     }
-                    secondary={dayjs(row.created_at).format('YYYY-MM-DD hh:mm A')}
+                    secondary={row.patient?.name}
                 />
             </ListItem>
 

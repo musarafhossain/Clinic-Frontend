@@ -5,4 +5,5 @@ export class UserModel extends BaseModel {
   public email!: string;
   public password!: string;
   public phone?: string;
+  public lastLogin?: string;
 }

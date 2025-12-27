@@ -42,7 +42,7 @@ export const useAuth = () => {
                 const me = await AuthService.me();
                 dispatch(
                     loginSuccessAction({
-                        user: me?.user || null,
+                        user: me?.data || null,
                         token,
                     })
                 );

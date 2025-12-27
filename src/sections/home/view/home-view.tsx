@@ -22,7 +22,7 @@ const HomeView = () => {
   // Set last 7 days attendace
   const attendanceData = homeStatsQuery.isLoading
     ? [0, 0, 0, 0, 0, 0, 0]
-    : homeStatsQuery.data.last_7_days_attendance;
+    : homeStatsQuery.data?.last_7_days_attendance ?? [];
   const labels = [];
   for (let i = 6; i >= 0; i--) {
     const d = dayjs().subtract(i, "day");

@@ -9,7 +9,6 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dialog from '@mui/material/Dialog';
@@ -111,7 +110,7 @@ const DiseaseListRow = ({ row }: Props) => {
                     </Avatar>
                 </ListItemAvatar>
 
-                <ListItemText primary={`₹${row.amount}`} secondary={row.name} />
+                <ListItemText primary={row.name} secondary={`₹${row.amount}`} />
             </ListItem>
 
             <Dialog open={confirmOpen} onClose={closeConfirmDialog}>

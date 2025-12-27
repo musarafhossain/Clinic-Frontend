@@ -1,6 +1,10 @@
 import { UserModel } from "./User.Models"
 import { DiseaseModel } from "./Disease.Models"
 import { PatientModel } from "./Patient.Models"
+import { PaymentHistoryModel } from "./PaymentHistory.Model"
+import { LoginModel } from "./Auth.Models"
+import { LoginResponseModel } from "./Auth.Models"
+import { StatModel } from "./StatModel"
 
 export class ResponseModel<T> {
   data!: T
@@ -20,4 +24,8 @@ export {
   UserModel,
   DiseaseModel,
   PatientModel,
+  LoginModel,
+  LoginResponseModel,
+  PaymentHistoryModel,
+  StatModel,
 }

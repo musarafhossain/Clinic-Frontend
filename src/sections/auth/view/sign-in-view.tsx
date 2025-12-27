@@ -16,6 +16,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { LoginModel, LoginResponseModel, ResponseModel } from "@/models";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -31,11 +32,6 @@ const schema = z.object({
     password: z.string().min(1, "Password is required"),
 });
 
-interface LoginParams {
-    email: string;
-    password: string;
-}
-
 export default function SignInView() {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
@@ -46,9 +42,9 @@ export default function SignInView() {
     }, [user, router]);
 
     const mutation = useMutation({
-        mutationFn: (params: LoginParams) => AuthService.login(params),
-        onSuccess: (data: any) => {
-            loginSuccess({ user: data.user, token: data.token });
+        mutationFn: (params: LoginModel) => AuthService.login(params),
+        onSuccess: (data: ResponseModel<LoginResponseModel>) => {
+            loginSuccess({ user: data.data.user, token: data.data.token });
             toast.success('Login success!');
             router.push(paths.root);
         },
@@ -57,11 +53,11 @@ export default function SignInView() {
         },
     });
 
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginParams>({
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginModel>({
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = (data: LoginParams) => {
+    const onSubmit = (data: LoginModel) => {
         mutation.mutate(data);
     };
 

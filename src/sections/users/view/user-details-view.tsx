@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import UserFormSkeleton from '../user-form-skeleton';
 import Retry from '@/sections/common/Retry';
+import { UserModel } from '@/models';
 
 interface Props {
     id: string;
@@ -60,7 +61,7 @@ const UserDetailsView = ({ id }: Props) => {
     return (
         <Box sx={{ maxWidth: 500, mx: 'auto', mt: 2, p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
             <UserInfo name={data?.name || ''} id={data?.id || ''} />
-            <UserDetails email={data?.email || '-'} phone={data?.phone || '-'} id={data?.id || ''} />
+            <UserDetails user={data as UserModel} />
         </Box>
     );
 };

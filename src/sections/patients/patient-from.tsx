@@ -26,7 +26,7 @@ import { Controller } from "react-hook-form";
 
 export const patientSchema = z.object({
     name: z.string().min(1, "Name is required"),
-    father_name: z.string().optional(),
+    guardian_name: z.string().optional(),
     dob: z.string().optional(),
     gender: z.enum([GENDER.MALE, GENDER.FEMALE, GENDER.OTHERS]),
     phone: z.string().optional(),
@@ -73,7 +73,7 @@ const PatientForm = ({ patient }: Props) => {
         resolver: zodResolver(patientSchema),
         defaultValues: {
             name: patient?.name ?? "",
-            father_name: patient?.father_name ?? "",
+            guardian_name: patient?.guardian_name ?? "",
             dob: patient?.dob
                 ? new Date(patient.dob).toISOString().split("T")[0]
                 : "",
@@ -126,10 +126,10 @@ const PatientForm = ({ patient }: Props) => {
                 helperText={errors.name?.message}
             />
             <TextField
-                label="Father Name *"
+                label="Guardian Name *"
                 fullWidth
                 sx={{ mb: 2 }}
-                {...register('father_name')}
+                {...register('guardian_name')}
             />
             <TextField
                 label="Date of Birth"

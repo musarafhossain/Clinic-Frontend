@@ -3,19 +3,25 @@ import { Typography, Stack, Paper, Divider, IconButton } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EditIcon from "@mui/icons-material/Edit";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import UpdateIcon from '@mui/icons-material/Update';
+import LoginIcon from '@mui/icons-material/Login';
 import { LockOpen } from "@mui/icons-material";
 import { paths } from "@/routes/paths";
 import { useRouter } from "next/navigation";
 import InfoRow from "./info-row";
+import { formatDate } from "@/helpers/date";
+import { UserModel } from "@/models";
 
 interface Props {
-    id: string;
-    email: string;
-    phone: string;
+    user: UserModel;
     profile?: boolean;
 }
 
-export default function UserDetails({ id, email, phone, profile = false }: Props) {
+export default function UserDetails({
+    user,
+    profile = false
+}: Props) {
     const router = useRouter();
 
     return (
@@ -39,7 +45,7 @@ export default function UserDetails({ id, email, phone, profile = false }: Props
                 </Typography>
                 {profile && <IconButton
                     size="small"
-                    onClick={() => router.push(paths.profile_edit(id))}
+                    onClick={() => router.push(paths.profile_edit(user?.id || ''))}
                 >
                     <EditIcon fontSize="small" color="action" />
                 </IconButton>}
@@ -51,12 +57,27 @@ export default function UserDetails({ id, email, phone, profile = false }: Props
                 <InfoRow
                     icon={<MailIcon color="action" />}
                     label="Email"
-                    value={email || '-'}
+                    value={user?.email || '-'}
                 />
                 <InfoRow
                     icon={<PhoneIcon color="action" />}
                     label="Phone"
-                    value={phone || '-'}
+                    value={user?.phone || '-'}
+                />
+                <InfoRow
+                    icon={<EventAvailableIcon color="action" />}
+                    label="Created At"
+                    value={formatDate(user?.created_at)}
+                />
+                <InfoRow
+                    icon={<UpdateIcon color="action" />}
+                    label="Last Update"
+                    value={formatDate(user?.updated_at)}
+                />
+                <InfoRow
+                    icon={<LoginIcon color="action" />}
+                    label="Last Login"
+                    value={formatDate(user?.lastLogin)}
                 />
                 <InfoRow
                     icon={<LockOpen color="action" />}

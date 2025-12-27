@@ -21,6 +21,7 @@ export const paths = {
     attendance_history: (id: string) => `/patients/attendance-history?id=${id}`,
   },
   attendance: '/attendance',
+  payment_history: '/payment-history',
   profile: '/profile',
   profile_edit: (id: string) => `/profile/edit?id=${id}`,
   comingSoon: '/coming-soon',

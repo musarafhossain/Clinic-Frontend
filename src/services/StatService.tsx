@@ -1,9 +1,9 @@
 import BaseService from './BaseService';
-import { ResponseModel } from '@/models';
+import { ResponseModel, StatModel } from '@/models';
 
 export class StatService extends BaseService {
     static API_PREFIX = '/stats';
-    static home(params?: { today?: string; }): Promise<ResponseModel<any>> {
+    static home(params?: { today?: string; }): Promise<ResponseModel<StatModel>> {
         StatService.initCancelToken();
         return new Promise((resolve, reject) => {
             this.Http.get(this.API_PREFIX + '/home', {
