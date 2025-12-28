@@ -143,8 +143,9 @@ export default function SignInView() {
                         }}
                     />
 
-                    <Stack justifyContent='end'>
-                        <Typography
+                    <Box display='flex' justifyContent='end'>
+                        <Button
+                            variant="text"
                             sx={{
                                 textAlign: "right",
                                 color: "primary.main",
@@ -155,9 +156,8 @@ export default function SignInView() {
                             onClick={() => router.push(paths.auth.forgotPassword)}
                         >
                             Forgot password?
-                        </Typography>
-                    </Stack>
-
+                        </Button>
+                    </Box>
                     <Button
                         type="submit"
                         variant="contained"

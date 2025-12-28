@@ -110,7 +110,7 @@ export default function ForgotPasswordView() {
                         variant="contained"
                         fullWidth
                         /* disabled={mutation.isPending} */
-                        sx={{ height: 48, mt: 1 }}
+                        sx={{ height: 48, mt: 3 }}
                     >
                         {/* {mutation.isPending ? (
                             <CircularProgress size={24} sx={{ color: "white" }} />
@@ -119,20 +119,13 @@ export default function ForgotPasswordView() {
                         )} */}
                         Send OTP
                     </Button>
-                    <Stack justifyContent='end'>
-                        <Typography
-                            align="center"
-                            sx={{
-                                mt: 1,
-                                color: "primary.main",
-                                cursor: "pointer",
-                                fontWeight: 500,
-                            }}
-                            onClick={() => router.push(paths.auth.signIn)}
-                        >
-                            Back to Sign In
-                        </Typography>
-                    </Stack>
+                    <Button
+                        variant="outlined"
+                        sx={{ height: 48 }}
+                        onClick={() => router.push(paths.auth.signIn)}
+                    >
+                        Back to Sign In
+                    </Button>
                 </Box>
             </Paper>
         </Box>
