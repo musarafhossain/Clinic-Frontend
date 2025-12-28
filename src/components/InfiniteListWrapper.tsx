@@ -107,7 +107,7 @@ export default function InfiniteListWrapper<T>({
         sx={{
           p: 1.5,
           position: 'sticky',
-          top: 0,
+          top: -1,
           backgroundColor: 'background.paper',
           zIndex: 10,
         }}

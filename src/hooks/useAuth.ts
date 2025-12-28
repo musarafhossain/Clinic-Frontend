@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { paths } from "@/routes/paths";
 import { AuthService } from "@/services";
 import { UserModel } from "@/models";
+import { STORAGE_KEYS } from "@/helpers/constant";
 
 export const useAuth = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -22,8 +23,8 @@ export const useAuth = () => {
 
     useEffect(() => {
         if (!hydrated && typeof window !== "undefined") {
-            const storedToken = localStorage.getItem("token");
-            const storedUser = localStorage.getItem("user");
+            const storedToken = localStorage.getItem(STORAGE_KEYS.JWT);
+            const storedUser = localStorage.getItem(STORAGE_KEYS.USER);
 
             dispatch(
                 hydrateAuth({

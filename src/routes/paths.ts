@@ -22,6 +22,7 @@ export const paths = {
   },
   attendance: '/attendance',
   payment_history: '/payment-history',
+  notification: '/notifications',
   profile: '/profile',
   profile_edit: (id: string) => `/profile/edit?id=${id}`,
   comingSoon: '/coming-soon',

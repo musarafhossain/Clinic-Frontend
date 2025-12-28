@@ -23,9 +23,10 @@ import { PaymentHistoryModel } from '@/models';
 interface Props {
     row: PaymentHistoryModel;
     patientId: string;
+    date: string;
 }
 
-const PaymentHistoryListRow = ({ row, patientId }: Props) => {
+const PaymentHistoryListRow = ({ row, patientId, date }: Props) => {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const queryClient = useQueryClient();
 
@@ -33,7 +34,7 @@ const PaymentHistoryListRow = ({ row, patientId }: Props) => {
         mutationFn: () => PaymentHistoryService.delete(row.id || ''),
         onSuccess: (resp) => {
             if (resp.success) {
-                queryClient.invalidateQueries({ queryKey: ['payment-history', patientId] });
+                queryClient.invalidateQueries({ queryKey: ["payment-history", date] });
                 setConfirmOpen(false);
                 toast.success(resp.message);
             } else {

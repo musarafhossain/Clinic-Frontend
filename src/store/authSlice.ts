@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserModel } from "@/models";
+import { STORAGE_KEYS } from "@/helpers/constant";
 
 interface AuthState {
   user: UserModel | null;
@@ -11,7 +12,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  token: null,
+  token: null,  
   loading: true,
   error: null,
   hydrated: false,
@@ -45,8 +46,8 @@ const authSlice = createSlice({
       state.token = action.payload.token;
 
       if (typeof window !== "undefined") {
-        localStorage.setItem("token", action.payload.token);
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        localStorage.setItem(STORAGE_KEYS.JWT, action.payload.token);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(action.payload.user));
       }
     },
 
@@ -60,8 +61,8 @@ const authSlice = createSlice({
       state.token = null;
 
       if (typeof window !== "undefined") {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.removeItem(STORAGE_KEYS.JWT);
+        localStorage.removeItem(STORAGE_KEYS.USER);
       }
     },
   },

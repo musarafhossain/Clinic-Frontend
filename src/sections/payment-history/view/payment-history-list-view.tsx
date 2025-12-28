@@ -16,7 +16,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Divider from '@mui/material/Divider';
 
-const AttendanceListView = () => {
+const PaymentHistoryListView = () => {
   const [date, setDate] = useState<Dayjs>(dayjs());
 
   const handleDateChange = (value: Dayjs | null) => {
@@ -25,8 +25,8 @@ const AttendanceListView = () => {
   };
 
   return (
-    <>
-      <Box sx={{ position: 'sticky', top: 0, left: 0 }}>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ width: "100%" }}>
         <Box sx={{ display: "flex", justifyContent: 'space-between', mt: 2 }}>
           <IconButton color="primary" onClick={() => setDate(prev => prev.subtract(1, "day"))}>
             <ArrowBackIosNewIcon />
@@ -51,6 +51,7 @@ const AttendanceListView = () => {
       <Divider sx={{ mt: 1.5, mx: 1.5 }} />
 
       <InfiniteListWrapper
+        sx={{ flex: 1, height: 'auto', minHeight: 0 }}
         queryKey={["payment-history", date.format("YYYY-MM-DD")]}
         queryFn={({ pageParam, search }) =>
           PaymentHistoryService.getList({ page: pageParam, search, limit: 10, paymentDate: date.format("YYYY-MM-DD") as string })
@@ -59,6 +60,7 @@ const AttendanceListView = () => {
           <PaymentHistoryListRow
             key={row.id + "-" + date.format("YYYY-MM-DD")}
             row={row}
+            date={date.format("YYYY-MM-DD")}
             patientId={row.patient?.id || ""}
           />
         )}
@@ -66,8 +68,8 @@ const AttendanceListView = () => {
         placeholderMessage={`No payment history found for ${date.format("YYYY-MM-DD")}`}
         placeholderIcon={<CurrencyRupeeIcon sx={{ fontSize: 48, opacity: 0.6 }} />}
       />
-    </>
+    </Box>
   )
 }
 
-export default AttendanceListView;
+export default PaymentHistoryListView;

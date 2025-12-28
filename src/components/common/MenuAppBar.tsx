@@ -22,16 +22,25 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
+import Divider from '@mui/material/Divider';
 import { Config } from '@/Config';
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { NotificationService } from '@/services';
+import { NotificationModel } from '@/models';
+import NotificationListRow from '@/sections/notifications/notification-list-row';
 
 export default function MenuAppBar() {
   const { title, backTo } = useAppBarTitle();
   const router = useRouter();
   const { logout } = useAuth();
+  const queryClient = useQueryClient();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [notifAnchor, setNotifAnchor] = useState<null | HTMLElement>(null);
@@ -40,40 +49,17 @@ export default function MenuAppBar() {
   const { mode, setMode } = useColorScheme();
   const darkMode = mode === 'dark';
 
-  const notifications = [
-    {
-      title: "New Patient Added",
-      name: "Dr. John",
-      message: "A new patient has been registered successfully.",
-    },
-    {
-      title: "Payment Received",
-      name: "Accounts",
-      message: "₹500 payment has been collected.",
-    },
-    {
-      title: "Attendance Updated",
-      name: "Staff",
-      message: "Patient attendance marked for today.",
-    },
-    {
-      title: "Attendance Updated",
-      name: "Staff",
-      message: "Patient attendance marked for today.",
-    },
-    {
-      title: "Attendance Updated",
-      name: "Staff",
-      message: "Patient attendance marked for today.",
-    },
-    {
-      title: "Attendance Updated",
-      name: "Staff",
-      message: "Patient attendance marked for today.",
-    },
-  ];
+  const { data, isLoading } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: () => NotificationService.getList({ page: 1, limit: 10 }),
+    select: (res) => ({
+      items: res.data?.items || [],
+      unreadCount: res.data?.unreadCount || 0
+    }),
+  });
 
-  const unreadCount = notifications.length;
+  const notifications = data?.items || [];
+  const unreadCount = data?.unreadCount || 0;
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -168,36 +154,35 @@ export default function MenuAppBar() {
               },
             }}
           >
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-
-              {notifications.length === 0 ? (
+            <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0 }}>
+              {isLoading ? (
+                <ListItem>
+                  <ListItemText primary="Loading..." />
+                </ListItem>
+              ) : notifications.length === 0 ? (
                 <ListItem>
                   <ListItemText primary="No notifications" />
                 </ListItem>
               ) : (
-                notifications.map((n, index) => (
-                  <React.Fragment key={index}>
-                    <ListItem alignItems="flex-start" divider>
-                      <ListItemText
-                        primary={n.title}
-                        secondary={
-                          <React.Fragment>
-                            <Typography
-                              component="span"
-                              variant="body2"
-                              sx={{ color: 'text.primary', display: 'inline' }}
-                            >
-                              {n.name}
-                            </Typography>
-                            {" — " + n.message}
-                          </React.Fragment>
-                        }
-                      />
-                    </ListItem>
-                  </React.Fragment>
-                ))
+                <>
+                  {notifications.map((n, index) =>
+                    <NotificationListRow key={n.id || index} row={n} handleNotifClose={handleNotifClose} />
+                  )}
+                  <Box sx={{ p: 1, textAlign: 'center' }}>
+                    <Button
+                      fullWidth
+                      variant="text"
+                      size="small"
+                      onClick={() => {
+                        handleNotifClose();
+                        router.push(paths.notification);
+                      }}
+                    >
+                      Show All Notifications
+                    </Button>
+                  </Box>
+                </>
               )}
-
             </List>
           </Popover>
 

@@ -26,8 +26,8 @@ const AttendanceListView = () => {
   };
 
   return (
-    <>
-      <Box sx={{ position: 'sticky', top: 0, left: 0 }}>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ width: "100%" }}>
         <Box sx={{ display: "flex", justifyContent: 'space-between', mt: 2 }}>
           <IconButton color="primary" onClick={() => setDate(prev => prev.subtract(1, "day"))}>
             <ArrowBackIosNewIcon />
@@ -52,6 +52,7 @@ const AttendanceListView = () => {
       <Divider sx={{ mt: 1.5, mx: 1.5 }} />
 
       <InfiniteListWrapper
+        sx={{ flex: 1, height: 'auto', minHeight: 0 }}
         queryKey={["attendance", date.format("YYYY-MM-DD")]}
         queryFn={({ pageParam, search }) =>
           AttendanceService.getList({
@@ -72,7 +73,7 @@ const AttendanceListView = () => {
         placeholderMessage="No patient found for attendace"
         placeholderIcon={<EventAvailableIcon sx={{ fontSize: 48, opacity: 0.6 }} />}
       />
-    </>
+    </Box>
   )
 }
 

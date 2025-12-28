@@ -15,6 +15,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import HealingIcon from '@mui/icons-material/Healing';
 import InfoIcon from '@mui/icons-material/Info';
 import PaymentIcon from '@mui/icons-material/Payment';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@mui/material/Button';
 import { Config } from '@/Config';
@@ -33,7 +34,7 @@ export default function AppBarDrawer({ open, setOpen }: Props) {
     };
 
     const goTo = (path: string) => {
-        setOpen(false); 
+        setOpen(false);
         router.push(path);
     };
 
@@ -60,6 +61,12 @@ export default function AppBarDrawer({ open, setOpen }: Props) {
                     <ListItemButton onClick={() => goTo(paths.payment_history)}>
                         <ListItemIcon><PaymentIcon /></ListItemIcon>
                         <ListItemText primary="Payment History" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={() => goTo(paths.notification)}>
+                        <ListItemIcon><NotificationsIcon /></ListItemIcon>
+                        <ListItemText primary="Notification" />
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>

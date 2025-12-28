@@ -12,7 +12,7 @@ import { STORAGE_KEYS } from '@/helpers/constant';
 axios.defaults.baseURL = Config.API.URL;
 
 axios.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("token");
+  const accessToken = localStorage.getItem(STORAGE_KEYS.JWT);
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
@@ -29,7 +29,7 @@ export interface HttpModel extends AxiosStatic { }
 export const Http: HttpModel = axios;
 export const FixedHttp = axios.create();
 FixedHttp.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("token");
+  const accessToken = localStorage.getItem(STORAGE_KEYS.JWT);
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }

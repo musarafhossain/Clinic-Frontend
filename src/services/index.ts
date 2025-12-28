@@ -4,6 +4,7 @@ import { DiseaseService } from "./DiseaseService";
 import { PatientService } from "./PatientService";
 import { AttendanceService } from "./AttendanceService";
 import { PaymentHistoryService } from "./PaymentHistoryService";
+import { NotificationService } from "./NotificationService";
 
 export {
     AuthService,
@@ -12,4 +13,5 @@ export {
     PatientService,
     AttendanceService,
     PaymentHistoryService,
+    NotificationService,
 }

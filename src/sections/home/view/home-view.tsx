@@ -54,9 +54,9 @@ const HomeView = () => {
     yAxis: [
       {
         min: 0,
-        width: 20,
+        width: 30,
         max: maxValue,
-        tickNumber: maxValue + 1,
+        tickNumber: 5,
         valueFormatter: (v: number) => {
           if (v % 1 !== 0) return "";
           if (v < 0 || v > maxValue) return "";
