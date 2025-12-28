@@ -26,6 +26,7 @@ interface InfiniteListWrapperProps<T> {
     color?: 'primary' | 'secondary' | 'inherit' | 'default' | 'error' | 'info' | 'success' | 'warning';
     sx?: any;
   };
+  sx?: any;
 }
 
 const debounce = (fn: Function, delay: number) => {
@@ -45,6 +46,7 @@ export default function InfiniteListWrapper<T>({
   placeholderMessage = "No items found",
   pageSize = 10,
   fabProps,
+  sx,
 }: InfiniteListWrapperProps<T>) {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -100,7 +102,7 @@ export default function InfiniteListWrapper<T>({
   const items: T[] = data?.pages.flatMap((page) => page.data.items) ?? [];
 
   return (
-    <Box ref={scrollRef} sx={{ height: '100%', overflowY: 'auto', position: 'relative' }}>
+    <Box ref={scrollRef} sx={{ height: '100%', overflowY: 'auto', position: 'relative', ...sx }}>
       <Box
         sx={{
           p: 1.5,

@@ -26,7 +26,7 @@ const PatientListView = () => {
   }
 
   return (
-    <Box>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Paper
         elevation={0}
         sx={{
@@ -64,6 +64,7 @@ const PatientListView = () => {
       <Divider />
 
       <InfiniteListWrapper
+        sx={{ flex: 1, height: 'auto', minHeight: 0 }}
         queryKey={['patients', status]}
         queryFn={({ pageParam, search }) =>
           PatientService.getList({ page: pageParam, search, status })
