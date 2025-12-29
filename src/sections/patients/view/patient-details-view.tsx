@@ -13,6 +13,7 @@ import Retry from '@/sections/common/Retry';
 import PatientDetails from '../patient-details';
 import { PatientModel } from '@/models';
 import PatientStats from '../patient-stats';
+import PatientActions from '../patient-actions';
 
 interface Props {
     id: string;
@@ -63,6 +64,7 @@ const PatientDetailsView = ({ id }: Props) => {
         <Box sx={{ maxWidth: 500, mx: 'auto', mt: 2, p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
             <PatientInfo name={data?.name || ''} id={data?.id || ''} />
             <PatientStats patient={data as PatientModel} />
+            <PatientActions patient={data as PatientModel} />
             <PatientDetails patient={data as PatientModel} />
         </Box>
     );

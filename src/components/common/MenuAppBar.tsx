@@ -21,17 +21,16 @@ import AppBarDrawer from './AppBarDrawer';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
+import CircularProgress from '@mui/material/CircularProgress';
 import Badge from '@mui/material/Badge';
 import Divider from '@mui/material/Divider';
 import { Config } from '@/Config';
 import * as React from 'react';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { NotificationService } from '@/services';
 import { NotificationModel } from '@/models';
 import NotificationListRow from '@/sections/notifications/notification-list-row';
@@ -40,7 +39,6 @@ export default function MenuAppBar() {
   const { title, backTo } = useAppBarTitle();
   const router = useRouter();
   const { logout } = useAuth();
-  const queryClient = useQueryClient();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [notifAnchor, setNotifAnchor] = useState<null | HTMLElement>(null);
@@ -49,7 +47,7 @@ export default function MenuAppBar() {
   const { mode, setMode } = useColorScheme();
   const darkMode = mode === 'dark';
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => NotificationService.getList({ page: 1, limit: 10 }),
     select: (res) => ({
@@ -69,6 +67,7 @@ export default function MenuAppBar() {
 
   const handleNotifOpen = (event: React.MouseEvent<HTMLElement>) => {
     setNotifAnchor(event.currentTarget);
+    refetch();
   };
 
   const handleNotifClose = () => setNotifAnchor(null);
@@ -146,44 +145,49 @@ export default function MenuAppBar() {
             slotProps={{
               paper: {
                 sx: {
-                  maxHeight: 400,
-                  overflowY: "auto",
+                  width: 360,
+                  height: 400,
+                  display: 'flex',
+                  flexDirection: 'column',
                   p: 1,
                   borderRadius: 2,
                 },
               },
             }}
           >
-            <List sx={{ width: '100%', bgcolor: 'background.paper', p: 0 }}>
-              {isLoading ? (
-                <ListItem>
-                  <ListItemText primary="Loading..." />
-                </ListItem>
-              ) : notifications.length === 0 ? (
-                <ListItem>
-                  <ListItemText primary="No notifications" />
-                </ListItem>
-              ) : (
-                <>
-                  {notifications.map((n, index) =>
+            {isLoading ? (
+              <Stack sx={{ height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                <CircularProgress size={32} sx={{ mb: 2 }} />
+                <Typography variant="body1">Loading...</Typography>
+              </Stack>
+            ) : notifications.length === 0 ? (
+              <Stack sx={{ height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                <NotificationsOffIcon sx={{ fontSize: 48, color: 'text.disabled', mb: 1 }} />
+                <Typography variant="body1" color="text.secondary">No notifications</Typography>
+              </Stack>
+            ) : (
+              <Stack sx={{ height: '100%' }}>
+                <List sx={{ flexGrow: 1, overflowY: 'auto', bgcolor: 'background.paper', p: 0 }}>
+                  {notifications.map((n: NotificationModel, index: number) =>
                     <NotificationListRow key={n.id || index} row={n} handleNotifClose={handleNotifClose} />
                   )}
-                  <Box sx={{ p: 1, textAlign: 'center' }}>
-                    <Button
-                      fullWidth
-                      variant="text"
-                      size="small"
-                      onClick={() => {
-                        handleNotifClose();
-                        router.push(paths.notification);
-                      }}
-                    >
-                      Show All Notifications
-                    </Button>
-                  </Box>
-                </>
-              )}
-            </List>
+                </List>
+                <Divider sx={{ my: 1 }} />
+                <Box sx={{ textAlign: 'center' }}>
+                  <Button
+                    fullWidth
+                    variant="text"
+                    size="small"
+                    onClick={() => {
+                      handleNotifClose();
+                      router.push(paths.notification);
+                    }}
+                  >
+                    Show All Notifications
+                  </Button>
+                </Box>
+              </Stack>
+            )}
           </Popover>
 
           {/* USER MENU */}

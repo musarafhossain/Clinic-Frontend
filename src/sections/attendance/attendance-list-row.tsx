@@ -12,11 +12,8 @@ import {
     DialogActions,
 } from "@mui/material";
 import IOSSwitch from '@/components/IOSSwitch';
-import { stringToColor } from '@/helpers/functions';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import EditIcon from '@mui/icons-material/Edit';
 import { PatientModel } from "@/models";
 import { useQuery } from "@tanstack/react-query";
@@ -83,6 +80,11 @@ const AttendanceListRow = ({ row, date }: Props) => {
                 return;
             }
             queryClient.invalidateQueries({ queryKey: ["attendance", vars.date] });
+            // check here if resp.data.total_attendance_count id multiple of 15 or multiple of 15 - 1 then queryKey notification
+            const count = resp.data.total_attendance_count;
+            if (count % 15 === 0 || count % 15 === 14) {
+                queryClient.invalidateQueries({ queryKey: ["notifications"] });
+            }
         },
         onError: () => {
             toast.error("Operation failed");
