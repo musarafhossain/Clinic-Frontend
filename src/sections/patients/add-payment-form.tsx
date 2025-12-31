@@ -11,7 +11,6 @@ import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { PaymentHistoryService } from '@/services';
 import { useRouter } from 'next/navigation';
-import { paths } from '@/routes/paths';
 
 const schema = z.object({
     amount: z
@@ -50,7 +49,7 @@ const AddPaymentForm = ({ patientId }: Props) => {
         onSuccess: (resp) => {
             if (resp.success) {
                 toast.success(resp.message);
-                router.push(paths.patient.root);
+                router.back();
             } else {
                 toast.error(resp.message);
             }

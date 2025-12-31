@@ -4,7 +4,7 @@ import { Paper, Typography, Stack } from "@mui/material";
 interface StatCardProps {
     title: string;
     value: string | number;
-    color?: string; // ✅ added
+    color: string;
 }
 
 export default function StatCard({ title, value, color }: StatCardProps) {
@@ -15,19 +15,14 @@ export default function StatCard({ title, value, color }: StatCardProps) {
                 p: 2,
                 borderRadius: 2,
                 backgroundColor: color
-                    ? color
-                    : (theme) =>
-                          theme.palette.mode === "dark"
-                              ? "rgba(255,255,255,0.05)"
-                              : "#f4f4f4ff",
             }}
         >
             <Stack direction="row" spacing={2} alignItems="center">
                 <Stack spacing={1}>
                     <Typography
                         variant="body2"
+                        noWrap
                         sx={{
-                            color: "text.secondary",
                             fontSize: "0.85rem",
                             fontWeight: 500,
                         }}

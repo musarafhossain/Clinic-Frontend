@@ -109,7 +109,7 @@ const UserListRow = ({ row }: Props) => {
                 divider
             >
                 <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: stringToColor(row?.name || 'U'), color: '#fff' }}></Avatar>
+                    <Avatar sx={{ bgcolor: stringToColor(row?.name || 'U'), color: 'white' }}></Avatar>
                 </ListItemAvatar>
 
                 <ListItemText primary={row.name || 'Not Available'} secondary={row.email} />
@@ -123,7 +123,7 @@ const UserListRow = ({ row }: Props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeConfirmDialog}>Cancel</Button>
+                    <Button color='inherit' onClick={closeConfirmDialog}>Cancel</Button>
                     <Button
                         color="error"
                         onClick={() => deleteMutation.mutate()}

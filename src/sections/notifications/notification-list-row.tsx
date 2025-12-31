@@ -53,15 +53,15 @@ const NotificationListRow = (props: Props) => {
                                     {row.message}
                                 </Typography>
                                 <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
-                                    <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
+                                    <Typography variant="body2" color="text.primary" sx={{ fontWeight: 'bold' }}>
                                         Bill: ₹{row.total_bill}
                                     </Typography>
                                     <Divider orientation="vertical" flexItem />
-                                    <Typography variant="body2" sx={{ color: 'success.main', fontWeight: 'bold' }}>
+                                    <Typography variant="body2" color="success" sx={{ fontWeight: 'bold' }}>
                                         Paid: ₹{row.amount_paid}
                                     </Typography>
                                     <Divider orientation="vertical" flexItem />
-                                    <Typography variant="body2" sx={{ color: isDue ? 'error.main' : 'info.main', fontWeight: 'bold' }}>
+                                    <Typography variant="body2" color={isDue ? 'error' : 'info'} sx={{ fontWeight: 'bold' }}>
                                         {isDue ? `Due: ₹${due}` : `Advance: ₹${Math.abs(due)}`}
                                     </Typography>
                                 </Stack>

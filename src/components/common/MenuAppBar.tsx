@@ -79,7 +79,7 @@ export default function MenuAppBar() {
 
           {backTo ? (
             <IconButton
-              onClick={() => router.push(backTo || '/')}
+              onClick={() => router.back()}
               edge="start"
               color="inherit"
               size="large"

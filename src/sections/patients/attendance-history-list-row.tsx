@@ -15,7 +15,7 @@ const AttendanceHistoryListRow = ({ row }: Props) => {
     return (
         <ListItem
             secondaryAction={
-                <Typography variant='h6' sx={{ color: 'green' }}>
+                <Typography variant='h6' color="success" sx={{ fontWeight: 600 }}>
                     +{`₹${row.disease_amount}`}
                 </Typography>
             }
@@ -25,7 +25,7 @@ const AttendanceHistoryListRow = ({ row }: Props) => {
                 <Avatar
                     sx={{
                         bgcolor: stringToColor(row?.name || 'U'),
-                        color: '#fff',
+                        color: 'white',
                     }}
                 >
                     <CalendarMonthIcon fontSize="medium" />

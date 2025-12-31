@@ -32,12 +32,12 @@ const HomeView = () => {
   const maxValue = Math.max(...attendanceData);
 
   const colors = {
-    attendance: isDark ? "#9a0064ff" : "#f9e5f5",
-    revenue: isDark ? "#009b0aff" : "#e5f9e6",
-    total: isDark ? "#0055a0ff" : "#e5f3f9",
-    ongoing: isDark ? "#8b8600ff" : "#f9f7e5",
-    completed: isDark ? "#008f1aff" : "#e6f9e5",
-    cancelled: isDark ? "#8f0000ff" : "#f9e5e5",
+    attendance: isDark ? "primary.light" : "primary.lighter",
+    revenue: isDark ? "success.light" : "success.lighter",
+    total: isDark ? "info.light" : "info.lighter",
+    ongoing: isDark ? "warning.light" : "warning.lighter",
+    completed: isDark ? "success.light" : "success.lighter",
+    cancelled: isDark ? "error.light" : "error.lighter",
   };
 
   const attendanceColors = [
@@ -75,7 +75,7 @@ const HomeView = () => {
   };
 
   return (
-    <Stack>
+    <Stack sx={{ maxWidth: 500, mx: 'auto', mt: 2 }}>
       <Box sx={{ p: 1.5 }}>
         <Typography variant='subtitle2' fontWeight={600} color='gray'>
           Today's Stats

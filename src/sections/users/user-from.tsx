@@ -19,7 +19,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { UserService } from '@/services';
 import { useRouter } from 'next/navigation';
-import { paths } from '@/routes/paths';
 import { UserModel } from '@/models';
 
 interface UserFormProps {
@@ -71,12 +70,10 @@ const UserForm = ({ user, profile = false }: UserFormProps) => {
         onSuccess: (resp) => {
             if (resp.success) {
                 toast.success(resp.message);
-                if (profile) {
-                    router.push(paths.profile);
-                } else {
+                if (!profile) {
                     queryClient.invalidateQueries({ queryKey: ['users'] });
-                    router.push(paths.user.root);
                 }
+                router.back();
             } else {
                 toast.error(resp.message);
             }

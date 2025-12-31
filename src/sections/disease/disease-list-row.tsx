@@ -103,7 +103,7 @@ const DiseaseListRow = ({ row }: Props) => {
                     <Avatar
                         sx={{
                             bgcolor: stringToColor(row?.name || 'U'),
-                            color: '#fff',
+                            color: 'white',
                         }}
                     >
                         <MedicalServicesIcon fontSize="medium" />
@@ -121,7 +121,7 @@ const DiseaseListRow = ({ row }: Props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeConfirmDialog}>Cancel</Button>
+                    <Button color='inherit' onClick={closeConfirmDialog}>Cancel</Button>
                     <Button
                         color="error"
                         onClick={() => deleteMutation.mutate()}

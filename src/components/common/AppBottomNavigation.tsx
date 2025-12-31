@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { useColorScheme } from '@mui/material/styles';
 import { paths } from '@/routes/paths';
-import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Home';
@@ -34,40 +33,28 @@ export default function AppBottomNavigation() {
   }, [pathname]);
 
   return (
-    <Box
+    <BottomNavigation
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+        router.push(newValue);
+      }}
+      showLabels
       sx={{
-        width: '100%',
-        position: 'static',
-        bottom: 0,
-        left: 0,
-        right: 0,
         bgcolor: bgColor,
         boxShadow: '0px -2px 6px rgba(0,0,0,0.1)',
-        zIndex: 1000,
+        '& .MuiBottomNavigationAction-root': {
+          color: textColor,
+        },
+        '& .Mui-selected': {
+          color: 'primary.main',
+        },
       }}
     >
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-          router.push(newValue);
-        }}
-        showLabels
-        sx={{
-          bgcolor: bgColor,
-          '& .MuiBottomNavigationAction-root': {
-            color: textColor,
-          },
-          '& .Mui-selected': {
-            color: '#1976d2',
-          },
-        }}
-      >
-        <BottomNavigationAction label="Home" value={paths.root} icon={<HomeIcon />} />
-        <BottomNavigationAction label="Attendance" value={paths.attendance} icon={<CalendarMonthIcon />} />
-        <BottomNavigationAction label="Patient" value={paths.patient.root} icon={<PeopleIcon />} />
-        <BottomNavigationAction label="Profile" value={paths.profile} icon={<PersonIcon />} />
-      </BottomNavigation>
-    </Box>
+      <BottomNavigationAction label="Home" value={paths.root} icon={<HomeIcon />} />
+      <BottomNavigationAction label="Attendance" value={paths.attendance} icon={<CalendarMonthIcon />} />
+      <BottomNavigationAction label="Patient" value={paths.patient.root} icon={<PeopleIcon />} />
+      <BottomNavigationAction label="Profile" value={paths.profile} icon={<PersonIcon />} />
+    </BottomNavigation>
   );
 }

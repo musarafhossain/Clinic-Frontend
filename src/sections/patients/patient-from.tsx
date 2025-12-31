@@ -21,7 +21,6 @@ import { PatientService, DiseaseService } from '@/services';
 import { PatientModel, DiseaseModel } from '@/models';
 import { GENDER, PATIENT_STATUS } from '@/helpers/enum';
 import { useRouter } from 'next/navigation';
-import { paths } from '@/routes/paths';
 import { Controller } from "react-hook-form";
 
 export const patientSchema = z.object({
@@ -102,7 +101,7 @@ const PatientForm = ({ patient }: Props) => {
             if (resp.success) {
                 toast.success(resp.message);
                 queryClient.invalidateQueries({ queryKey: ['patients'] });
-                router.push(paths.patient.root);
+                router.back();
             } else {
                 toast.error(resp.message);
             }

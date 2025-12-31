@@ -5,7 +5,6 @@ import UserForm from '../user-from';
 import { useQuery } from '@tanstack/react-query';
 import { UserService } from '@/services';
 import { useRouter } from 'next/navigation';
-import { paths } from '@/routes/paths';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import UserFormSkeleton from '../user-form-skeleton';
@@ -49,7 +48,7 @@ const UserEditView = ({ id }: Props) => {
             <Retry
                 message="Failed to load user"
                 onRetry={refetch}
-                onBack={() => router.push(paths.user.root)}
+                onBack={() => router.back()}
             />
         );
     }

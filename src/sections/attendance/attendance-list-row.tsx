@@ -164,7 +164,7 @@ const AttendanceListRow = ({ row, date }: Props) => {
                             >
                                 Add Payment
                             </Button>
-                            <Typography variant="body1" component="span" sx={{ color: 'green', fontWeight: 600 }}>
+                            <Typography variant="h6" component="span" color="success" sx={{ fontWeight: 600 }}>
                                 ₹{row?.today_payment || '0'}
                             </Typography>
                         </Stack>

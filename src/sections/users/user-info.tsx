@@ -14,8 +14,8 @@ const UserInfo = ({ name, id }: Props) => {
                 sx={{
                     width: 100,
                     height: 100,
-                    bgcolor: "#c9e7f5",
-                    color: "#13a4ec",
+                    bgcolor: "primary.lighter",
+                    color: "primary.main",
                     fontWeight: "bold",
                     fontSize: 35,
                 }}

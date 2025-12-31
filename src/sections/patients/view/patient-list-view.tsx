@@ -50,7 +50,7 @@ const PatientListView = () => {
               transition: 'background-color 0.3s',
             },
             '& .MuiTab-root.Mui-selected': {
-              backgroundColor: 'rgba(25, 118, 210, 0.1)',
+              backgroundColor: 'primary.lighter',
               color: 'primary.main',
             },
           }}

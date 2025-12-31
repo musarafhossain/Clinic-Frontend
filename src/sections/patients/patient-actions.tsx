@@ -29,28 +29,28 @@ export default function PatientActions({ patient }: Props) {
         >
             <Stack direction="row" justifyContent="space-around" alignItems="center">
                 <Stack alignItems="center" gap={0.5}>
-                    <IconButton color="primary" sx={{ bgcolor: 'background.paper', p: 1.5 }} onClick={() => router.push(paths.patient.edit(patient.id ?? ''))}>
+                    <IconButton color="primary" sx={{ bgcolor: 'primary.lighter', p: 1.5 }} onClick={() => router.push(paths.patient.edit(patient.id ?? ''))}>
                         <EditIcon />
                     </IconButton>
                     <Typography variant="caption" color="text.secondary">Edit</Typography>
                 </Stack>
 
                 <Stack alignItems="center" gap={0.5}>
-                    <IconButton color="success" sx={{ bgcolor: 'background.paper', p: 1.5 }} onClick={() => router.push(paths.patient.add_payment(patient.id ?? ''))}>
+                    <IconButton color="success" sx={{ bgcolor: 'success.lighter', p: 1.5 }} onClick={() => router.push(paths.patient.add_payment(patient.id ?? ''))}>
                         <PaymentIcon />
                     </IconButton>
                     <Typography variant="caption" color="text.secondary">Add Payment</Typography>
                 </Stack>
 
                 <Stack alignItems="center" gap={0.5}>
-                    <IconButton color="info" sx={{ bgcolor: 'background.paper', p: 1.5 }} onClick={() => router.push(paths.patient.payment_history(patient.id ?? ''))}>
+                    <IconButton color="info" sx={{ bgcolor: 'info.lighter', p: 1.5 }} onClick={() => router.push(paths.patient.payment_history(patient.id ?? ''))}>
                         <CurrencyRupee />
                     </IconButton>
                     <Typography variant="caption" color="text.secondary">History</Typography>
                 </Stack>
 
                 <Stack alignItems="center" gap={0.5}>
-                    <IconButton color="warning" sx={{ bgcolor: 'background.paper', p: 1.5 }} onClick={() => router.push(paths.patient.attendance_history(patient.id ?? ''))}>
+                    <IconButton color="warning" sx={{ bgcolor: 'warning.lighter', p: 1.5 }} onClick={() => router.push(paths.patient.attendance_history(patient.id ?? ''))}>
                         <CalendarMonth />
                     </IconButton>
                     <Typography variant="caption" color="text.secondary">Attendance</Typography>

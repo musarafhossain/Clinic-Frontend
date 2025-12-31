@@ -168,11 +168,12 @@ const PatientListRow = ({ row, status }: Props) => {
                                     height: 20,
                                     fontSize: 12,
                                     fontWeight: 600,
+                                    color: 'white',
                                     bgcolor: row?.gender === GENDER.MALE
-                                        ? "#4a5ce2ff"
+                                        ? "info.main"
                                         : row?.gender === GENDER.FEMALE
-                                            ? "#e91ea9ff"
-                                            : "#cacf5fff"
+                                            ? "success.main"
+                                            : "warning.main"
                                 }}
                             >
                                 {row?.gender === GENDER.MALE
@@ -199,7 +200,7 @@ const PatientListRow = ({ row, status }: Props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeConfirmDialog}>Cancel</Button>
+                    <Button color='inherit' onClick={closeConfirmDialog}>Cancel</Button>
                     <Button
                         color="error"
                         onClick={() => deleteMutation.mutate()}

@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import ListItemText from '@mui/material/ListItemText';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { PaymentHistoryModel } from '@/models';
+import Typography from '@mui/material/Typography';
 
 interface Props {
     row: PaymentHistoryModel;
@@ -63,7 +64,7 @@ const PaymentHistoryListRow = ({ row, patientId }: Props) => {
                     <Avatar
                         sx={{
                             bgcolor: stringToColor(row?.created_at?.toString() || 'T'),
-                            color: '#fff',
+                            color: 'white',
                         }}
                     >
                         <AttachMoneyIcon fontSize="medium" />
@@ -72,9 +73,9 @@ const PaymentHistoryListRow = ({ row, patientId }: Props) => {
 
                 <ListItemText
                     primary={
-                        <span style={{ color: 'green', fontWeight: 600, fontSize: '1.2rem' }}>
+                        <Typography variant="h6" component="span" color="success" sx={{ fontWeight: 600 }}>
                             ₹{row.amount}
-                        </span>
+                        </Typography>
                     }
                     secondary={dayjs(row.created_at).format('YYYY-MM-DD hh:mm A')}
                 />
@@ -88,7 +89,7 @@ const PaymentHistoryListRow = ({ row, patientId }: Props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeConfirmDialog}>Cancel</Button>
+                    <Button color='inherit' onClick={closeConfirmDialog}>Cancel</Button>
                     <Button
                         color="error"
                         onClick={() => deleteMutation.mutate()}

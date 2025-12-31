@@ -10,7 +10,7 @@ export type ConfigValue = {
 
 export const Config: ConfigValue = {
   APP: {
-    NAME: 'Phyzo',
+    NAME: 'Physio',
     VERSION: 'v1.0.0'
   },
   API: {

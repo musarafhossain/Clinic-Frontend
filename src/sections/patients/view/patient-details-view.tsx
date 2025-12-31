@@ -5,7 +5,6 @@ import PatientInfo from '../patient-info';
 import { useQuery } from '@tanstack/react-query';
 import { PatientService } from '@/services';
 import { useRouter } from 'next/navigation';
-import { paths } from '@/routes/paths';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import UserFormSkeleton from '../user-form-skeleton';
@@ -53,7 +52,7 @@ const PatientDetailsView = ({ id }: Props) => {
             <Retry
                 message="Failed to load patient"
                 onRetry={refetch}
-                onBack={() => router.push(paths.patient.root)}
+                onBack={() => router.back()}
             />
         );
     }

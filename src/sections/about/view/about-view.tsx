@@ -5,7 +5,7 @@ import { Config } from '@/Config';
 
 const AboutView = () => {
     return (
-        <Container maxWidth="sm" sx={{ py: 4 }}>
+        <Container maxWidth="sm" sx={{ py: 2, height: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
             <Box sx={{ textAlign: 'center', mb: 4 }}>
                 <Avatar
                     sx={{
@@ -19,21 +19,20 @@ const AboutView = () => {
                     <InfoIcon sx={{ fontSize: 80 }} />
                 </Avatar>
                 <Typography variant="h5" component="h1" fontWeight='bold' gutterBottom>
-                    About Phyzo
+                    About {Config.APP.NAME}
                 </Typography>
                 <Typography variant="body1" color="text.secondary" sx={{ px: 1 }}>
-                    Phyzo is a simple and modern physiotherapy management system that helps clinics manage patients, track treatments, and monitor progress efficiently.
+                    {Config.APP.NAME} is a simple and modern physiotherapy management system that helps clinics manage patients, track treatments, and monitor progress efficiently.
                 </Typography>
             </Box>
 
-            <Divider />
-
-            <Box sx={{ textAlign: 'center', mt: 6 }}>
+            <Box sx={{ textAlign: 'center' }}>
+                <Divider sx={{ mb: 2 }} />
                 <Typography variant="body2" color="text.secondary">
                     App Version: {Config.APP.VERSION}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    &copy; {new Date().getFullYear()} Phyzo. All rights reserved.
+                    &copy; {new Date().getFullYear()} {Config.APP.NAME}. All rights reserved.
                 </Typography>
             </Box>
         </Container>

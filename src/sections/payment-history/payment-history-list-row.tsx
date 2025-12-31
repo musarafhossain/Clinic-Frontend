@@ -15,7 +15,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { PaymentHistoryService } from '@/services';
-import dayjs from 'dayjs';
+import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { PaymentHistoryModel } from '@/models';
@@ -64,7 +64,7 @@ const PaymentHistoryListRow = ({ row, patientId, date }: Props) => {
                     <Avatar
                         sx={{
                             bgcolor: stringToColor(row?.created_at?.toString() || 'T'),
-                            color: '#fff',
+                            color: 'white',
                         }}
                     >
                         <AttachMoneyIcon fontSize="medium" />
@@ -73,9 +73,9 @@ const PaymentHistoryListRow = ({ row, patientId, date }: Props) => {
 
                 <ListItemText
                     primary={
-                        <span style={{ color: 'green', fontWeight: 600, fontSize: '1.2rem' }}>
+                        <Typography variant="h6" component="span" color="success" sx={{ fontWeight: 600 }}>
                             ₹{row.amount}
-                        </span>
+                        </Typography>
                     }
                     secondary={row.patient?.name}
                 />
@@ -89,7 +89,7 @@ const PaymentHistoryListRow = ({ row, patientId, date }: Props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeConfirmDialog}>Cancel</Button>
+                    <Button color='inherit' onClick={closeConfirmDialog}>Cancel</Button>
                     <Button
                         color="error"
                         onClick={() => deleteMutation.mutate()}
