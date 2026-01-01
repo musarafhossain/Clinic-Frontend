@@ -94,7 +94,7 @@ const HomeView = () => {
             <StatCard
               title="Todays' Revenue"
               color={colors.revenue}
-              value={`₹ ${homeStatsQuery?.data?.todays_stats?.todays_revenue ?? 0}`}
+              value={`₹${homeStatsQuery?.data?.todays_stats?.todays_revenue ?? 0}`}
             />
           </Grid>
         </Grid>

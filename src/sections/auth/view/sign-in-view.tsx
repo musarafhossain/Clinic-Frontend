@@ -146,13 +146,7 @@ export default function SignInView() {
                     <Box display='flex' justifyContent='end'>
                         <Button
                             variant="text"
-                            sx={{
-                                textAlign: "right",
-                                color: "primary.main",
-                                fontSize: 14,
-                                cursor: "pointer",
-                                fontWeight: 500,
-                            }}
+                            color="primary"
                             onClick={() => router.push(paths.auth.forgotPassword)}
                         >
                             Forgot password?
@@ -163,13 +157,10 @@ export default function SignInView() {
                         variant="contained"
                         fullWidth
                         disabled={mutation.isPending}
+                        loading={mutation.isPending}
                         sx={{ height: 48, mt: 1 }}
                     >
-                        {mutation.isPending ? (
-                            <CircularProgress size={24} sx={{ color: "white" }} />
-                        ) : (
-                            "Sign In"
-                        )}
+                        Sign In
                     </Button>
                 </Box>
             </Paper>

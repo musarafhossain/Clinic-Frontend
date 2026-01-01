@@ -35,7 +35,7 @@ export const paths = {
   faqs: '/faqs',
   auth: {
     signIn: `/sign-in`,
-    verify: `/verify`,
+    verify_otp: (email: string) => `/verify-otp?email=${email}`,
     signUp: `/sign-up`,
     forgotPassword: `/forgot-password`,
   },

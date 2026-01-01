@@ -5,7 +5,6 @@ import {
     Button,
     Typography,
     Paper,
-    CircularProgress,
     InputAdornment,
     Stack,
 } from "@mui/material";
@@ -19,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { AuthService } from "@/services";
 import Logo from "@/assets/icon.png";
 import { paths } from "@/routes/paths";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const schema = z.object({
     email: z.email("Invalid email"),
@@ -35,20 +35,19 @@ export default function ForgotPasswordView() {
         resolver: zodResolver(schema),
     });
 
-    /* const mutation = useMutation({
-        mutationFn: (params: ForgotParams) => AuthService.forgotPassword(params),
-        onSuccess: () => {
-            toast.success("Reset link sent to your email");
-            router.push(paths.auth.signIn);
+    const mutation = useMutation({
+        mutationFn: (params: ForgotParams) => AuthService.sendOtp(params),
+        onSuccess: (resp) => {
+            toast.success(resp?.message || "OTP sent to your email");
+            router.push(paths.auth.verify_otp(resp?.data?.email));
         },
         onError: (error: any) => {
-            toast.error(error?.response?.data?.message || "Failed to send reset link");
+            toast.error(error?.response?.data?.message || "Failed to send OTP");
         }
-    }); */
+    });
 
     const onSubmit = (data: ForgotParams) => {
-        //mutation.mutate(data)
-        toast.error('Forgot password is not implemented');
+        mutation.mutate(data)
     };
 
     return (
@@ -105,27 +104,25 @@ export default function ForgotPasswordView() {
                     />
 
                     {/* Submit */}
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        fullWidth
-                        /* disabled={mutation.isPending} */
-                        sx={{ height: 48, mt: 3 }}
-                    >
-                        {/* {mutation.isPending ? (
-                            <CircularProgress size={24} sx={{ color: "white" }} />
-                        ) : (
-                            "Send OTP"
-                        )} */}
-                        Send OTP
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        sx={{ height: 48 }}
-                        onClick={() => router.push(paths.auth.signIn)}
-                    >
-                        Back to Sign In
-                    </Button>
+                    <Stack direction="row" spacing={2} mt={2}>
+                        <Button
+                            variant="outlined"
+                            startIcon={<ArrowBackIcon />}
+                            sx={{ height: 48, flex: 1 }}
+                            onClick={() => router.push(paths.auth.signIn)}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            disabled={mutation.isPending}
+                            loading={mutation.isPending}
+                            sx={{ height: 48, flex: 1 }}
+                        >
+                            Send OTP
+                        </Button>
+                    </Stack>
                 </Box>
             </Paper>
         </Box>

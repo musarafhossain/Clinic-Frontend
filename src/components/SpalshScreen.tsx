@@ -1,3 +1,4 @@
+'use client';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Image from "next/image";
@@ -15,7 +16,7 @@ export default function SplashScreen() {
                     alignItems: "center",
                     justifyContent: "center",
                     gap: 5,
-                    background: "rgba(41, 90, 164, 1)",
+                    backgroundColor: theme.palette.primary.main,
                 })}
                 open={true}
             >
