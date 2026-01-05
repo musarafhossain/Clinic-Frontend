@@ -2,7 +2,6 @@
 
 import { Typography, Stack, Paper, Divider } from "@mui/material";
 import MaleIcon from '@mui/icons-material/Male';
-import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import InfoIcon from "@mui/icons-material/Info";
@@ -41,14 +40,9 @@ export default function PatientDetails({ patient }: Props) {
 
             <Stack spacing={2}>
                 <InfoRow
-                    icon={<FamilyRestroomIcon color="action" />}
-                    label="Guardian's Name"
-                    value={patient.guardian_name}
-                />
-                <InfoRow
                     icon={<CalendarMonthIcon color="action" />}
-                    label="Date of Birth"
-                    value={patient.dob ? dayjs(patient.dob).format("YYYY-MM-DD") : "-"}
+                    label="Age"
+                    value={patient.age ? patient.age + " years" : "-"}
                 />
                 <InfoRow
                     icon={<MaleIcon color="action" />}

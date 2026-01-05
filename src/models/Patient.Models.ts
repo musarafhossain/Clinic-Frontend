@@ -16,8 +16,7 @@ export class Attendance {
 
 export class PatientModel extends BaseModel {
   public name!: string;
-  public guardian_name?: string;
-  public dob?: string;
+  public age?: string;
   public gender?: GENDER;
   public status?: PATIENT_STATUS;
   public disease?: Disease | null;

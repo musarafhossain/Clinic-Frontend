@@ -186,7 +186,7 @@ const PatientListRow = ({ row, status }: Props) => {
                     </Stack>
                     <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between'>
                         <Typography variant='caption'>
-                            {row.guardian_name || "--"} • {row.dob ? dayjs(row.dob).format("DD/MM/YYYY") : "--"}
+                            {row.age ? row.age + " years old" : "--"}
                         </Typography>
                     </Stack>
                 </Stack>

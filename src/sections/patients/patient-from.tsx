@@ -25,8 +25,7 @@ import { Controller } from "react-hook-form";
 
 export const patientSchema = z.object({
     name: z.string().min(1, "Name is required"),
-    guardian_name: z.string().optional(),
-    dob: z.string().optional(),
+    age: z.string().optional(),
     gender: z.enum([GENDER.MALE, GENDER.FEMALE, GENDER.OTHERS]),
     phone: z.string().optional(),
     address: z.string().optional(),
@@ -72,10 +71,7 @@ const PatientForm = ({ patient }: Props) => {
         resolver: zodResolver(patientSchema),
         defaultValues: {
             name: patient?.name ?? "",
-            guardian_name: patient?.guardian_name ?? "",
-            dob: patient?.dob
-                ? new Date(patient.dob).toISOString().split("T")[0]
-                : "",
+            age: patient?.age ?? "",
             gender: patient?.gender ?? GENDER.MALE,
             phone: patient?.phone ?? "",
             address: patient?.address ?? "",
@@ -85,18 +81,9 @@ const PatientForm = ({ patient }: Props) => {
     });
 
     const mutation = useMutation({
-        mutationFn: (payload: FormValues) => {
-            const formattedPayload = {
-                ...payload,
-                dob: payload.dob
-                    ? dayjs(payload.dob).format("YYYY-MM-DD")
-                    : null,
-            };
-
-            return patient?.id
-                ? PatientService.update(patient.id, formattedPayload)
-                : PatientService.create(formattedPayload);
-        },
+        mutationFn: (payload: FormValues) => patient?.id
+            ? PatientService.update(patient.id, payload)
+            : PatientService.create(payload),
         onSuccess: (resp) => {
             if (resp.success) {
                 toast.success(resp.message);
@@ -125,22 +112,13 @@ const PatientForm = ({ patient }: Props) => {
                 helperText={errors.name?.message}
             />
             <TextField
-                label="Guardian Name *"
+                label="Age"
+                type="number"
                 fullWidth
                 sx={{ mb: 2 }}
-                {...register('guardian_name')}
-            />
-            <TextField
-                label="Date of Birth"
-                type="date"
-                slotProps={{
-                    inputLabel: { shrink: true },
-                }}
-                fullWidth
-                sx={{ mb: 2 }}
-                {...register("dob")}
-                error={!!errors.dob}
-                helperText={errors.dob?.message}
+                {...register("age")}
+                error={!!errors.age}
+                helperText={errors.age?.message}
             />
             <FormControl sx={{ mb: 2 }}>
                 <FormLabel>Gender *</FormLabel>
