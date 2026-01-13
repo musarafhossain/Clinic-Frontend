@@ -18,7 +18,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
@@ -27,7 +26,6 @@ import { PatientService } from '@/services';
 import { paths } from '@/routes/paths';
 import { PATIENT_STATUS, GENDER } from '@/helpers/enum';
 import { Stack } from '@mui/material';
-import dayjs from 'dayjs'
 import PaymentsIcon from '@mui/icons-material/Payments';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import MenuList from '@mui/material/MenuList';
@@ -159,41 +157,45 @@ const PatientListRow = ({ row, status }: Props) => {
                     <Avatar sx={{ bgcolor: stringToColor(row?.name || 'U'), color: '#fff' }}></Avatar>
                 </ListItemAvatar>
 
-                <Stack width='100%' spacing={0.5}>
-                    <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between'>
-                        <Typography variant='subtitle1' lineHeight={1.2}>{row?.name}</Typography>
-                        <Stack flexDirection='row' alignItems='center' gap={0.5}>
-                            {row.gender && <Avatar
-                                sx={{
-                                    width: 20,
-                                    height: 20,
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    color: 'white',
-                                    bgcolor: row?.gender === GENDER.MALE
-                                        ? "info.main"
+                <ListItemText
+                    primary={
+                        <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between' component='span'>
+                            <Typography variant='subtitle1' lineHeight={1.2} component='span'>{row?.name}</Typography>
+                            <Stack flexDirection='row' alignItems='center' gap={0.5} component='span'>
+                                {row.gender && <Avatar
+                                    sx={{
+                                        width: 20,
+                                        height: 20,
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        color: 'white',
+                                        bgcolor: row?.gender === GENDER.MALE
+                                            ? "info.main"
+                                            : row?.gender === GENDER.FEMALE
+                                                ? "success.main"
+                                                : "warning.main"
+                                    }}
+                                >
+                                    {row?.gender === GENDER.MALE
+                                        ? "M"
                                         : row?.gender === GENDER.FEMALE
-                                            ? "success.main"
-                                            : "warning.main"
-                                }}
-                            >
-                                {row?.gender === GENDER.MALE
-                                    ? "M"
-                                    : row?.gender === GENDER.FEMALE
-                                        ? "F"
-                                        : "O"}
-                            </Avatar>}
+                                            ? "F"
+                                            : "O"}
+                                </Avatar>}
+                            </Stack>
                         </Stack>
-                    </Stack>
-                    <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between'>
-                        <Typography variant='caption'>
-                            {"Total Visit: " + (row?.total_attendance || 0)}
-                        </Typography>
-                        <Typography variant='caption'>
-                            {row.age ? row.age + " years old" : "--"}
-                        </Typography>
-                    </Stack>
-                </Stack>
+                    }
+                    secondary={
+                        <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between' component='span' mt={0.5}>
+                            <Typography variant='caption' component='span'>
+                                {"Total Visit: " + (row?.total_attendance || 0)}
+                            </Typography>
+                            <Typography variant='caption' component='span'>
+                                {row.age ? row.age + " years old" : "--"}
+                            </Typography>
+                        </Stack>
+                    }
+                />
             </ListItem>
 
             <Dialog open={confirmOpen} onClose={closeConfirmDialog}>
