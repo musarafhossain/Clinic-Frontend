@@ -18,6 +18,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
@@ -160,7 +161,7 @@ const PatientListRow = ({ row, status }: Props) => {
 
                 <Stack width='100%' spacing={0.5}>
                     <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between'>
-                        <Typography variant='subtitle1'>{row?.name}</Typography>
+                        <Typography variant='subtitle1' lineHeight={1.2}>{row?.name}</Typography>
                         <Stack flexDirection='row' alignItems='center' gap={0.5}>
                             {row.gender && <Avatar
                                 sx={{
@@ -185,6 +186,9 @@ const PatientListRow = ({ row, status }: Props) => {
                         </Stack>
                     </Stack>
                     <Stack flexDirection='row' gap={1.5} alignItems="center" justifyContent='space-between'>
+                        <Typography variant='caption'>
+                            {"Total Visit: " + (row?.total_attendance || 0)}
+                        </Typography>
                         <Typography variant='caption'>
                             {row.age ? row.age + " years old" : "--"}
                         </Typography>

@@ -35,11 +35,11 @@ const schema = z.object({
 export default function SignInView() {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
-    const { loginSuccess, user } = useAuth();
+    const { loginSuccess, user, token } = useAuth();
 
     useEffect(() => {
-        if (user) router.push(paths.root);
-    }, [user, router]);
+        if (user && token) router.push(paths.root);
+    }, [user, token, router]);
 
     const mutation = useMutation({
         mutationFn: (params: LoginModel) => AuthService.login(params),

@@ -126,7 +126,7 @@ const AttendanceListRow = ({ row, date }: Props) => {
         >
             <ListItemText
                 primary={
-                    <Typography variant="subtitle1" fontSize='1.1rem' component="span">
+                    <Typography variant="subtitle1" lineHeight={1} fontSize='1.1rem' component="span">
                         {row.name || 'Not Available'}
                     </Typography>
                 }

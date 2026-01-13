@@ -36,7 +36,9 @@ export const useAuth = () => {
     }, [hydrated, dispatch]);
 
     useEffect(() => {
-        if (!token) return;
+        if (!token || !user) {
+            return;
+        };
 
         const validateUser = async () => {
             try {
@@ -44,7 +46,7 @@ export const useAuth = () => {
                 dispatch(
                     loginSuccessAction({
                         user: me?.data || null,
-                        token,
+                        token: token || '',
                     })
                 );
             } catch (err: any) {
@@ -77,8 +79,8 @@ export const useAuth = () => {
 
     const loginSuccess = (payload: { user: UserModel; token: string }) => {
         if (typeof window !== "undefined") {
-            localStorage.setItem("token", payload.token);
-            localStorage.setItem("user", JSON.stringify(payload.user));
+            localStorage.setItem(STORAGE_KEYS.JWT, payload.token);
+            localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(payload.user));
         }
         dispatch(loginSuccessAction(payload));
     };
@@ -86,8 +88,8 @@ export const useAuth = () => {
     const logout = () => {
         dispatch(logoutAction());
         if (typeof window !== "undefined") {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
+            localStorage.removeItem(STORAGE_KEYS.JWT);
+            localStorage.removeItem(STORAGE_KEYS.USER);
         }
         router.push(paths.auth.signIn);
     };

@@ -19,6 +19,8 @@ import { AuthService } from "@/services";
 import Logo from "@/assets/icon.png";
 import { paths } from "@/routes/paths";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 
 const schema = z.object({
     email: z.email("Invalid email"),
@@ -30,6 +32,11 @@ interface ForgotParams {
 
 export default function ForgotPasswordView() {
     const router = useRouter();
+    const { user, token } = useAuth();
+
+    useEffect(() => {
+        if (user && token) router.push(paths.root);
+    }, [user, token, router]);
 
     const { register, handleSubmit, formState: { errors } } = useForm<ForgotParams>({
         resolver: zodResolver(schema),

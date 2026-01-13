@@ -88,6 +88,7 @@ const HomeView = () => {
               title="Today's Attendance"
               color={colors.attendance}
               value={homeStatsQuery?.data?.todays_stats?.todays_attendance ?? 0}
+              isLoading={homeStatsQuery.isLoading}
             />
           </Grid>
           <Grid size={6}>
@@ -95,6 +96,7 @@ const HomeView = () => {
               title="Todays' Revenue"
               color={colors.revenue}
               value={`₹${homeStatsQuery?.data?.todays_stats?.todays_revenue ?? 0}`}
+              isLoading={homeStatsQuery.isLoading}
             />
           </Grid>
         </Grid>
@@ -111,6 +113,7 @@ const HomeView = () => {
               title="Total Patient"
               color={colors.total}
               value={homeStatsQuery?.data?.patients_stats?.total_patient ?? 0}
+              isLoading={homeStatsQuery.isLoading}
             />
           </Grid>
           <Grid size={6}>
@@ -118,6 +121,7 @@ const HomeView = () => {
               title="Ongoing Patient"
               color={colors.ongoing}
               value={homeStatsQuery?.data?.patients_stats?.ongoing_patient ?? 0}
+              isLoading={homeStatsQuery.isLoading}
             />
           </Grid>
           <Grid size={6}>
@@ -125,6 +129,7 @@ const HomeView = () => {
               title="Completed Patient"
               color={colors.completed}
               value={homeStatsQuery?.data?.patients_stats?.completed_patient ?? 0}
+              isLoading={homeStatsQuery.isLoading}
             />
           </Grid>
           <Grid size={6}>
@@ -132,6 +137,7 @@ const HomeView = () => {
               title="Cancelled Patient"
               color={colors.cancelled}
               value={homeStatsQuery?.data?.patients_stats?.cancelled_patient ?? 0}
+              isLoading={homeStatsQuery.isLoading}
             />
           </Grid>
         </Grid>

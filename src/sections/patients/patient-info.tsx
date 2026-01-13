@@ -23,11 +23,11 @@ const PatientInfo = ({ name, id }: Props) => {
                 {initial}
             </Avatar>
 
-            <Typography variant="h5" fontWeight="bold" mt={2}>
+            <Typography variant="h5" fontWeight="bold" mt={2} textAlign='center' lineHeight={1.2}>
                 {name || "Unknown"}
             </Typography>
 
-            <Typography variant="body2" color="text.secondary" mt={0.1}>
+            <Typography variant="body2" color="text.secondary" mt={1}>
                 Patient ID: {id || '-'}
             </Typography>
         </Stack>

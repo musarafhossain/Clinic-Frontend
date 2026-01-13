@@ -58,10 +58,14 @@ interface Props {
 
 export default function VerifyOtpView({ email }: Props) {
     const router = useRouter();
-    const { loginSuccess } = useAuth();
+    const { loginSuccess, user, token } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [isOtpVerified, setIsOtpVerified] = useState(false);
+
+    useEffect(() => {
+        if (user && token) router.push(paths.root);
+    }, [user, token, router]);
 
     useEffect(() => {
         if (!email) {
